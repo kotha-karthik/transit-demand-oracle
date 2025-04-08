@@ -2,13 +2,17 @@
 import React, { useState } from 'react';
 import StationMap from './StationMap';
 import FlowVisualization from './FlowVisualization';
-import PredictionModel from './PredictionModel';
+import DeepLearningArchitecture from './DeepLearningArchitecture';
+import APIEndpoints from './APIEndpoints';
 import FactorSelector from './FactorSelector';
 import { stations } from '../data/mockData';
 import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { ChartContainer } from '@/components/ui/chart';
+import { Separator } from '@/components/ui/separator';
+import { BarChart, BrainCircuit, Cpu, Database, Network } from 'lucide-react';
 
 const Dashboard = () => {
   const [selectedStation, setSelectedStation] = useState<number | null>(1); // Default to Central Station
@@ -56,9 +60,22 @@ const Dashboard = () => {
       
       <Tabs defaultValue="flow" className="mb-6">
         <TabsList>
-          <TabsTrigger value="flow">Flow Analysis</TabsTrigger>
-          <TabsTrigger value="model">Model Details</TabsTrigger>
-          <TabsTrigger value="performance">Performance</TabsTrigger>
+          <TabsTrigger value="flow" className="flex items-center gap-1">
+            <Network className="h-4 w-4" />
+            <span>Flow Analysis</span>
+          </TabsTrigger>
+          <TabsTrigger value="model" className="flex items-center gap-1">
+            <BrainCircuit className="h-4 w-4" />
+            <span>Model Architecture</span>
+          </TabsTrigger>
+          <TabsTrigger value="api" className="flex items-center gap-1">
+            <Cpu className="h-4 w-4" />
+            <span>API Endpoints</span>
+          </TabsTrigger>
+          <TabsTrigger value="performance" className="flex items-center gap-1">
+            <BarChart className="h-4 w-4" />
+            <span>Performance</span>
+          </TabsTrigger>
         </TabsList>
         
         <TabsContent value="flow" className="pt-4">
@@ -133,7 +150,7 @@ const Dashboard = () => {
         <TabsContent value="model" className="pt-4">
           <div className="grid grid-cols-12 gap-6">
             <div className="col-span-12 md:col-span-8">
-              <PredictionModel />
+              <DeepLearningArchitecture />
             </div>
             
             <div className="col-span-12 md:col-span-4">
@@ -159,9 +176,37 @@ const Dashboard = () => {
                     <p className="text-xs text-muted-foreground">External Factors: 4</p>
                   </div>
                 </div>
+                
+                <Separator className="my-4" />
+                
+                <div>
+                  <h3 className="text-sm font-medium mb-2">External Factors</h3>
+                  <div className="space-y-2">
+                    <div className="flex justify-between text-xs">
+                      <span>Weather Conditions</span>
+                      <span className="font-medium">High Impact</span>
+                    </div>
+                    <div className="flex justify-between text-xs">
+                      <span>Public Events</span>
+                      <span className="font-medium">Medium Impact</span>
+                    </div>
+                    <div className="flex justify-between text-xs">
+                      <span>Time of Day</span>
+                      <span className="font-medium">High Impact</span>
+                    </div>
+                    <div className="flex justify-between text-xs">
+                      <span>Day of Week</span>
+                      <span className="font-medium">Medium Impact</span>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
+        </TabsContent>
+        
+        <TabsContent value="api" className="pt-4">
+          <APIEndpoints />
         </TabsContent>
         
         <TabsContent value="performance" className="pt-4">
@@ -190,6 +235,23 @@ const Dashboard = () => {
                   <p className="text-xs text-muted-foreground mt-1">percentage</p>
                 </div>
               </div>
+              
+              <div className="mt-6">
+                <h3 className="text-sm font-medium mb-2">Performance by City</h3>
+                <ChartContainer 
+                  className="h-60"
+                  config={{
+                    london: { color: "#3B82F6" },
+                    tokyo: { color: "#10B981" },
+                    nyc: { color: "#F59E0B" },
+                    beijing: { color: "#EF4444" }
+                  }}
+                >
+                  <div className="flex items-center justify-center h-full">
+                    <p className="text-muted-foreground text-sm">Model performance chart placeholder</p>
+                  </div>
+                </ChartContainer>
+              </div>
             </div>
             
             <div className="bg-card p-4 rounded-lg shadow-md">
@@ -209,6 +271,28 @@ const Dashboard = () => {
                 <div className="bg-secondary/30 p-2 rounded-md">
                   <p className="text-xs text-muted-foreground">Learning Rate</p>
                   <p className="font-semibold">0.001</p>
+                </div>
+              </div>
+              
+              <div className="mt-6">
+                <h3 className="text-sm font-medium mb-2">Ablation Studies</h3>
+                <div className="space-y-2">
+                  <div className="flex justify-between bg-secondary/20 p-2 rounded-md">
+                    <span className="text-xs">Base LSTM only</span>
+                    <span className="text-xs font-medium">MAE: 22.7</span>
+                  </div>
+                  <div className="flex justify-between bg-secondary/20 p-2 rounded-md">
+                    <span className="text-xs">LSTM + MGCN</span>
+                    <span className="text-xs font-medium">MAE: 16.3</span>
+                  </div>
+                  <div className="flex justify-between bg-secondary/20 p-2 rounded-md">
+                    <span className="text-xs">LSTM + Attention</span>
+                    <span className="text-xs font-medium">MAE: 15.8</span>
+                  </div>
+                  <div className="flex justify-between bg-primary/20 p-2 rounded-md font-medium">
+                    <span className="text-xs">Full Model</span>
+                    <span className="text-xs">MAE: 12.5</span>
+                  </div>
                 </div>
               </div>
             </div>

@@ -2,9 +2,11 @@
 import React from 'react';
 import { cityRealTimeData, topMetroCities } from '@/data/cityData';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { AlertTriangle, Clock, TrendingUp } from 'lucide-react';
+import { AlertTriangle, Clock, TrendingUp, BarChart3 } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 
 interface RealTimeFlowPanelProps {
   cityId: string;
@@ -33,10 +35,24 @@ const RealTimeFlowPanel: React.FC<RealTimeFlowPanelProps> = ({ cityId }) => {
     <div className="bg-card p-4 rounded-lg shadow-md h-full">
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-lg font-semibold">Real-Time Flow Data</h2>
-        <Badge variant="outline" className="flex items-center gap-1">
-          <Clock className="h-3 w-3" />
-          <span>Live</span>
-        </Badge>
+        <div className="flex items-center gap-2">
+          <Badge variant="outline" className="flex items-center gap-1">
+            <Clock className="h-3 w-3" />
+            <span>Live</span>
+          </Badge>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button variant="ghost" size="icon" className="h-6 w-6">
+                  <BarChart3 className="h-4 w-4" />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Model accuracy: {city?.modelAccuracy}%</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        </div>
       </div>
       
       <div className="space-y-6">
