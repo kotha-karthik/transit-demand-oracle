@@ -65,7 +65,7 @@ const RealTimeFlowPanel: React.FC<RealTimeFlowPanelProps> = ({ cityId }) => {
                 <div className="flex items-center gap-1">
                   <Badge variant={
                     station.prediction === "Increasing" ? "destructive" :
-                    station.prediction === "Decreasing" ? "success" : "secondary"
+                    station.prediction === "Decreasing" ? "secondary" : "outline"
                   }>
                     {station.prediction}
                   </Badge>
