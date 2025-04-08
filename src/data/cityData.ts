@@ -1,4 +1,3 @@
-
 // Top metro cities data with information about their metro systems
 export const topMetroCities = [
   {
@@ -189,10 +188,31 @@ export const cityRealTimeData = {
     criticalStations: [
       { name: "King's Cross", load: "Heavy", prediction: "Stable" },
       { name: "Waterloo", load: "Heavy", prediction: "Decreasing" },
-      { name: "Oxford Circus", load: "Moderate", prediction: "Increasing" }
+      { name: "Oxford Circus", load: "Moderate", prediction: "Increasing" },
+      { name: "Bank", load: "Heavy", prediction: "Increasing" },
+      { name: "Liverpool Street", load: "Moderate", prediction: "Stable" }
     ],
-    alerts: ["Central Line partial closure", "Planned engineering works on Northern Line"],
-    trendingFactors: ["Football match (36% impact)", "Tourism (27% impact)", "Light rain (16% impact)"]
+    alerts: [
+      "Central Line partial closure between Liverpool Street and Holborn",
+      "Planned engineering works on Northern Line between Camden Town and Kennington",
+      "Minor delays on Victoria Line due to earlier signal failure at Victoria"
+    ],
+    trendingFactors: [
+      "Football match at Wembley (36% impact)",
+      "Tourism peak season (27% impact)",
+      "Light rain in central areas (16% impact)",
+      "Rush hour commuting (42% impact)"
+    ],
+    lineStatuses: [
+      { line: "bakerloo", status: "Good Service" },
+      { line: "central", status: "Severe Delays" },
+      { line: "circle", status: "Good Service" },
+      { line: "district", status: "Minor Delays" },
+      { line: "jubilee", status: "Good Service" },
+      { line: "northern", status: "Part Closure" },
+      { line: "piccadilly", status: "Good Service" },
+      { line: "victoria", status: "Minor Delays" }
+    ]
   },
   "mexico": {
     currentPassengerLoad: 1.7, // million
@@ -260,6 +280,80 @@ export const cityMetroNetworks = {
   "seoul": { stations: [], lines: [] },
   "moscow": { stations: [], lines: [] },
   "nyc": { stations: [], lines: [] },
-  "london": { stations: [], lines: [] },
+  "london": {
+    stations: [
+      { id: 1, name: "King's Cross", x: 45, y: 25 },
+      { id: 2, name: "Oxford Circus", x: 38, y: 45 },
+      { id: 3, name: "Waterloo", x: 42, y: 58 },
+      { id: 4, name: "Bank", x: 52, y: 48 },
+      { id: 5, name: "Liverpool Street", x: 56, y: 42 },
+      { id: 6, name: "Paddington", x: 28, y: 35 },
+      { id: 7, name: "Victoria", x: 38, y: 60 },
+      { id: 8, name: "London Bridge", x: 50, y: 58 },
+      { id: 9, name: "Baker Street", x: 30, y: 30 },
+      { id: 10, name: "Westminster", x: 40, y: 55 },
+      { id: 11, name: "Piccadilly Circus", x: 40, y: 48 },
+      { id: 12, name: "Euston", x: 42, y: 22 },
+      { id: 13, name: "Green Park", x: 36, y: 47 },
+      { id: 14, name: "Bond Street", x: 34, y: 42 },
+      { id: 15, name: "Holborn", x: 45, y: 40 }
+    ],
+    lines: [
+      // Northern Line connections
+      { source: 1, target: 12, volume: 210, predictedVolume: 225, line: "northern" },
+      { source: 12, target: 4, volume: 180, predictedVolume: 195, line: "northern" },
+      { source: 4, target: 8, volume: 165, predictedVolume: 175, line: "northern" },
+      
+      // Victoria Line connections
+      { source: 1, target: 12, volume: 195, predictedVolume: 190, line: "victoria" },
+      { source: 12, target: 2, volume: 205, predictedVolume: 220, line: "victoria" },
+      { source: 2, target: 7, volume: 175, predictedVolume: 180, line: "victoria" },
+      
+      // Central Line connections
+      { source: 14, target: 2, volume: 160, predictedVolume: 165, line: "central" },
+      { source: 2, target: 15, volume: 150, predictedVolume: 155, line: "central" },
+      { source: 15, target: 5, volume: 140, predictedVolume: 135, line: "central" },
+      
+      // Jubilee Line connections
+      { source: 9, target: 14, volume: 135, predictedVolume: 130, line: "jubilee" },
+      { source: 14, target: 13, volume: 140, predictedVolume: 145, line: "jubilee" },
+      { source: 13, target: 10, volume: 160, predictedVolume: 170, line: "jubilee" },
+      
+      // Piccadilly Line connections
+      { source: 1, target: 15, volume: 125, predictedVolume: 130, line: "piccadilly" },
+      { source: 15, target: 11, volume: 130, predictedVolume: 135, line: "piccadilly" },
+      { source: 11, target: 13, volume: 140, predictedVolume: 145, line: "piccadilly" },
+      
+      // Bakerloo Line connections
+      { source: 9, target: 6, volume: 110, predictedVolume: 105, line: "bakerloo" },
+      { source: 6, target: 11, volume: 115, predictedVolume: 120, line: "bakerloo" },
+      { source: 11, target: 10, volume: 125, predictedVolume: 130, line: "bakerloo" },
+      { source: 10, target: 3, volume: 135, predictedVolume: 140, line: "bakerloo" },
+      
+      // Circle Line connections
+      { source: 6, target: 9, volume: 100, predictedVolume: 95, line: "circle" },
+      { source: 9, target: 1, volume: 110, predictedVolume: 105, line: "circle" },
+      { source: 1, target: 5, volume: 120, predictedVolume: 125, line: "circle" },
+      
+      // District Line connections
+      { source: 6, target: 10, volume: 105, predictedVolume: 110, line: "district" },
+      { source: 10, target: 3, volume: 115, predictedVolume: 120, line: "district" }
+    ]
+  },
   "mexico": { stations: [], lines: [] }
 };
+
+// London Underground line information
+export const londonUndergroundLines = [
+  { id: 'bakerloo', name: 'Bakerloo Line', color: '#B36305' },
+  { id: 'central', name: 'Central Line', color: '#E32017' },
+  { id: 'circle', name: 'Circle Line', color: '#FFD300' },
+  { id: 'district', name: 'District Line', color: '#00782A' },
+  { id: 'jubilee', name: 'Jubilee Line', color: '#A0A5A9' },
+  { id: 'metropolitan', name: 'Metropolitan Line', color: '#9B0056' },
+  { id: 'northern', name: 'Northern Line', color: '#000000' },
+  { id: 'piccadilly', name: 'Piccadilly Line', color: '#003688' },
+  { id: 'victoria', name: 'Victoria Line', color: '#0098D4' },
+  { id: 'waterloo', name: 'Waterloo & City Line', color: '#95CDBA' },
+  { id: 'elizabeth', name: 'Elizabeth Line', color: '#6950A1' }
+];

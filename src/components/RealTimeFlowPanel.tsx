@@ -2,17 +2,26 @@
 import React from 'react';
 import { cityRealTimeData, topMetroCities } from '@/data/cityData';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { AlertTriangle, Clock, TrendingUp, BarChart3 } from 'lucide-react';
+import { AlertTriangle, Clock, TrendingUp, BarChart3, Map } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 interface RealTimeFlowPanelProps {
   cityId: string;
+  routeInfo?: {
+    origin: string;
+    destination: string;
+    line: string;
+    estimatedTime: string;
+    passengerLoad: string;
+    prediction: string;
+  };
 }
 
-const RealTimeFlowPanel: React.FC<RealTimeFlowPanelProps> = ({ cityId }) => {
+const RealTimeFlowPanel: React.FC<RealTimeFlowPanelProps> = ({ cityId, routeInfo }) => {
   const city = topMetroCities.find(city => city.id === cityId);
   
   // Check if cityRealTimeData[cityId] exists before accessing it
@@ -30,6 +39,75 @@ const RealTimeFlowPanel: React.FC<RealTimeFlowPanelProps> = ({ cityId }) => {
       </div>
     );
   }
+
+  // Handle the specific route information if provided
+  const routeSpecificData = routeInfo ? (
+    <Card className="mb-4 border-primary/20">
+      <CardHeader className="pb-2">
+        <CardTitle className="text-base flex items-center gap-2">
+          <Map className="h-4 w-4" />
+          Selected Route Analysis
+        </CardTitle>
+      </CardHeader>
+      <CardContent>
+        <div className="space-y-3">
+          <div className="flex justify-between items-center">
+            <div>
+              <div className="font-medium">{routeInfo.origin} → {routeInfo.destination}</div>
+              <div className="text-xs text-muted-foreground">via {
+                cityId === "london" 
+                  ? {
+                      'bakerloo': 'Bakerloo Line',
+                      'central': 'Central Line',
+                      'circle': 'Circle Line',
+                      'district': 'District Line',
+                      'jubilee': 'Jubilee Line',
+                      'northern': 'Northern Line',
+                      'piccadilly': 'Piccadilly Line',
+                      'victoria': 'Victoria Line',
+                    }[routeInfo.line] || 'Unknown Line'
+                  : 'Metro Line'
+              }</div>
+            </div>
+            <Badge variant={
+              routeInfo.passengerLoad === "High" ? "destructive" : 
+              routeInfo.passengerLoad === "Medium" ? "warning" : 
+              "outline"
+            }>
+              {routeInfo.passengerLoad} Load
+            </Badge>
+          </div>
+          
+          <div className="grid grid-cols-3 gap-2 text-center">
+            <div className="bg-muted p-2 rounded-md">
+              <div className="text-xs text-muted-foreground">Travel Time</div>
+              <div className="font-medium">{routeInfo.estimatedTime}</div>
+            </div>
+            <div className="bg-muted p-2 rounded-md">
+              <div className="text-xs text-muted-foreground">Load Trend</div>
+              <div className="font-medium">{routeInfo.prediction}</div>
+            </div>
+            <div className="bg-muted p-2 rounded-md">
+              <div className="text-xs text-muted-foreground">Accuracy</div>
+              <div className="font-medium">{data.forecastAccuracy}%</div>
+            </div>
+          </div>
+          
+          <Alert variant="outline" className="py-2">
+            <AlertDescription className="text-xs">
+              {
+                routeInfo.prediction === "Increasing" 
+                  ? "Passenger volume is expected to increase in the next hour. Consider alternative routes."
+                  : routeInfo.prediction === "Decreasing"
+                    ? "Passenger volume is expected to decrease. Travel conditions improving."
+                    : "Passenger volume is expected to remain stable."
+              }
+            </AlertDescription>
+          </Alert>
+        </div>
+      </CardContent>
+    </Card>
+  ) : null;
   
   return (
     <div className="bg-card p-4 rounded-lg shadow-md h-full">
@@ -56,6 +134,9 @@ const RealTimeFlowPanel: React.FC<RealTimeFlowPanelProps> = ({ cityId }) => {
       </div>
       
       <div className="space-y-6">
+        {/* Route specific data if available */}
+        {routeSpecificData}
+        
         {/* Current stats */}
         <div>
           <div className="grid grid-cols-2 gap-2">

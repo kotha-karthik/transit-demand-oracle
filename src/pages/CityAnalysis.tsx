@@ -1,22 +1,44 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from '@/components/Header';
 import CitySelector from '@/components/CitySelector';
 import CityMetroNetwork from '@/components/CityMetroNetwork';
 import RealTimeFlowPanel from '@/components/RealTimeFlowPanel';
+import LondonMetroRoutes from '@/components/LondonMetroRoutes';
 import { topMetroCities } from '@/data/cityData';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import DeepLearningArchitecture from '@/components/DeepLearningArchitecture';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { InfoIcon } from 'lucide-react';
+import { InfoIcon, MapPin } from 'lucide-react';
+
+interface RouteInfo {
+  origin: string;
+  destination: string;
+  line: string;
+  estimatedTime: string;
+  passengerLoad: string;
+  prediction: string;
+}
 
 const CityAnalysis = () => {
   // Default to London Metro
   const londonCity = topMetroCities.find(city => city.id === "london") || topMetroCities[0];
   const [selectedCity, setSelectedCity] = useState(londonCity.id);
+  const [selectedRoute, setSelectedRoute] = useState<RouteInfo | null>(null);
+  
+  // Force London as the selected city when the component loads
+  useEffect(() => {
+    setSelectedCity("london");
+  }, []);
   
   const handleCityChange = (cityId: string) => {
     setSelectedCity(cityId);
+    // Reset selected route when changing cities
+    setSelectedRoute(null);
+  };
+  
+  const handleRouteSelect = (route: RouteInfo) => {
+    setSelectedRoute(route);
   };
   
   return (
@@ -39,12 +61,34 @@ const CityAnalysis = () => {
             />
           </div>
           
-          <Alert className="mb-6">
-            <InfoIcon className="h-4 w-4" />
-            <AlertDescription>
-              This demonstration focuses on the London Metro system, showcasing our deep learning model's ability to predict passenger flows and station loads.
-            </AlertDescription>
-          </Alert>
+          {selectedCity !== "london" && (
+            <Alert className="mb-6">
+              <InfoIcon className="h-4 w-4" />
+              <AlertDescription>
+                For detailed route analysis and real-time flow forecasting, please select the London Metro system.
+              </AlertDescription>
+            </Alert>
+          )}
+          
+          {selectedCity === "london" && selectedRoute && (
+            <Alert className="mb-6 bg-primary/5 border-primary/20">
+              <MapPin className="h-4 w-4 text-primary" />
+              <AlertDescription>
+                Analyzing route: <span className="font-medium">{selectedRoute.origin} → {selectedRoute.destination}</span> on the {
+                  {
+                    'bakerloo': 'Bakerloo Line',
+                    'central': 'Central Line',
+                    'circle': 'Circle Line',
+                    'district': 'District Line',
+                    'jubilee': 'Jubilee Line',
+                    'northern': 'Northern Line',
+                    'piccadilly': 'Piccadilly Line',
+                    'victoria': 'Victoria Line',
+                  }[selectedRoute.line] || 'London Underground'
+                }
+              </AlertDescription>
+            </Alert>
+          )}
           
           <Tabs defaultValue="network" className="mb-6">
             <TabsList>
@@ -54,11 +98,32 @@ const CityAnalysis = () => {
             
             <TabsContent value="network">
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <div className="lg:col-span-2">
+                {selectedCity === "london" && (
+                  <div className="lg:col-span-3 grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <div className="lg:col-span-2">
+                      <CityMetroNetwork 
+                        cityId={selectedCity} 
+                        selectedRoute={selectedRoute ? {
+                          origin: selectedRoute.origin,
+                          destination: selectedRoute.destination,
+                          line: selectedRoute.line
+                        } : undefined}
+                      />
+                    </div>
+                    <div>
+                      <LondonMetroRoutes onRouteSelect={handleRouteSelect} />
+                    </div>
+                  </div>
+                )}
+                
+                <div className={selectedCity === "london" ? "lg:col-span-2" : "lg:col-span-2"}>
                   <CityMetroNetwork cityId={selectedCity} />
                 </div>
                 <div>
-                  <RealTimeFlowPanel cityId={selectedCity} />
+                  <RealTimeFlowPanel 
+                    cityId={selectedCity} 
+                    routeInfo={selectedRoute ?? undefined}
+                  />
                 </div>
               </div>
             </TabsContent>
