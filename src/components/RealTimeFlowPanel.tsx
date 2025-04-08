@@ -12,7 +12,11 @@ interface RealTimeFlowPanelProps {
 
 const RealTimeFlowPanel: React.FC<RealTimeFlowPanelProps> = ({ cityId }) => {
   const city = topMetroCities.find(city => city.id === cityId);
-  const data = cityRealTimeData[cityId as keyof typeof cityRealTimeData];
+  
+  // Check if cityRealTimeData[cityId] exists before accessing it
+  const data = cityId in cityRealTimeData 
+    ? cityRealTimeData[cityId as keyof typeof cityRealTimeData]
+    : null;
   
   if (!data) {
     return (
@@ -76,7 +80,7 @@ const RealTimeFlowPanel: React.FC<RealTimeFlowPanelProps> = ({ cityId }) => {
         </div>
         
         {/* Alerts */}
-        {data.alerts.length > 0 && (
+        {data.alerts && data.alerts.length > 0 && (
           <div>
             <h3 className="text-sm font-medium mb-2">Current Alerts</h3>
             <div className="space-y-2">
@@ -91,20 +95,27 @@ const RealTimeFlowPanel: React.FC<RealTimeFlowPanelProps> = ({ cityId }) => {
         )}
         
         {/* Trending factors */}
-        <div>
-          <h3 className="text-sm font-medium mb-2 flex items-center gap-1">
-            <TrendingUp className="h-4 w-4" />
-            <span>Trending Impact Factors</span>
-          </h3>
-          <div className="space-y-1">
-            {data.trendingFactors.map((factor, index) => (
-              <div key={index} className="text-sm flex justify-between">
-                <span>{factor.split('(')[0]}</span>
-                <span className="text-muted-foreground">{factor.split('(')[1].replace(')', '')}</span>
-              </div>
-            ))}
+        {data.trendingFactors && data.trendingFactors.length > 0 && (
+          <div>
+            <h3 className="text-sm font-medium mb-2 flex items-center gap-1">
+              <TrendingUp className="h-4 w-4" />
+              <span>Trending Impact Factors</span>
+            </h3>
+            <div className="space-y-1">
+              {data.trendingFactors.map((factor, index) => {
+                const parts = factor.split('(');
+                const label = parts[0] || '';
+                const value = parts.length > 1 ? parts[1].replace(')', '') : '';
+                return (
+                  <div key={index} className="text-sm flex justify-between">
+                    <span>{label}</span>
+                    <span className="text-muted-foreground">{value}</span>
+                  </div>
+                );
+              })}
+            </div>
           </div>
-        </div>
+        )}
         
         <Separator />
         
@@ -113,13 +124,13 @@ const RealTimeFlowPanel: React.FC<RealTimeFlowPanelProps> = ({ cityId }) => {
           <h3 className="font-medium">About {city?.name} Metro</h3>
           <div className="mt-2 grid grid-cols-2 gap-x-4 gap-y-1">
             <div>Lines:</div>
-            <div className="font-medium">{city?.stats.lines}</div>
+            <div className="font-medium">{city?.stats?.lines || 'N/A'}</div>
             <div>Stations:</div>
-            <div className="font-medium">{city?.stats.stations}</div>
+            <div className="font-medium">{city?.stats?.stations || 'N/A'}</div>
             <div>Network Length:</div>
-            <div className="font-medium">{city?.stats.networkLength} km</div>
+            <div className="font-medium">{city?.stats?.networkLength ? `${city.stats.networkLength} km` : 'N/A'}</div>
             <div>Daily Ridership:</div>
-            <div className="font-medium">{city?.stats.dailyRidership}M</div>
+            <div className="font-medium">{city?.stats?.dailyRidership ? `${city.stats.dailyRidership}M` : 'N/A'}</div>
           </div>
         </div>
       </div>
