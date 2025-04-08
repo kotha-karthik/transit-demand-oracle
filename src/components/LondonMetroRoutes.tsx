@@ -5,6 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Clock, Train, Route, Map, BarChart } from 'lucide-react';
+import LineBadge from './LineBadge';
 
 // London Metro (Underground) lines
 const londonLines = [
@@ -79,7 +80,7 @@ const LondonMetroRoutes: React.FC<LondonMetroRoutesProps> = ({ onRouteSelect }) 
           <Train className="h-5 w-5" />
           <span>London Underground Routes</span>
         </CardTitle>
-        <CardDescription>Select metro line and stations to analyze passenger flow</CardDescription>
+        <CardDescription>Select tube line and stations to analyze passenger flow</CardDescription>
       </CardHeader>
       <CardContent>
         <div className="space-y-4">
