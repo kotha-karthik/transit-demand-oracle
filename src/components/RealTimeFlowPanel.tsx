@@ -71,7 +71,7 @@ const RealTimeFlowPanel: React.FC<RealTimeFlowPanelProps> = ({ cityId, routeInfo
             </div>
             <Badge variant={
               routeInfo.passengerLoad === "High" ? "destructive" : 
-              routeInfo.passengerLoad === "Medium" ? "warning" : 
+              routeInfo.passengerLoad === "Medium" ? "secondary" : 
               "outline"
             }>
               {routeInfo.passengerLoad} Load
@@ -93,7 +93,7 @@ const RealTimeFlowPanel: React.FC<RealTimeFlowPanelProps> = ({ cityId, routeInfo
             </div>
           </div>
           
-          <Alert variant="outline" className="py-2">
+          <Alert variant="default" className="py-2">
             <AlertDescription className="text-xs">
               {
                 routeInfo.prediction === "Increasing" 

@@ -165,7 +165,7 @@ const LondonMetroRoutes: React.FC<LondonMetroRoutesProps> = ({ onRouteSelect }) 
                       </div>
                       <Badge variant={
                         route.passengerLoad === "High" ? "destructive" : 
-                        route.passengerLoad === "Medium" ? "warning" : 
+                        route.passengerLoad === "Medium" ? "secondary" : 
                         "outline"
                       }>
                         {route.passengerLoad}
