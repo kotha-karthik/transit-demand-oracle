@@ -1,12 +1,12 @@
-
 import React, { useState, useEffect } from 'react';
 import Header from '@/components/Header';
 import CityMetroNetwork from '@/components/CityMetroNetwork';
 import RealTimeFlowPanel from '@/components/RealTimeFlowPanel';
 import LondonMetroRoutes from '@/components/LondonMetroRoutes';
+import StationSelector from '@/components/StationSelector';
+import StationMetrics from '@/components/StationMetrics';
 import { cityRealTimeData, londonUndergroundLines } from '@/data/cityData';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import DeepLearningArchitecture from '@/components/DeepLearningArchitecture';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { InfoIcon, MapPin, Train } from 'lucide-react';
 import LineBadge from '@/components/LineBadge';
@@ -22,12 +22,25 @@ interface RouteInfo {
 
 const LondonUndergroundAnalysis = () => {
   const [selectedRoute, setSelectedRoute] = useState<RouteInfo | null>(null);
+  const [selectedStation, setSelectedStation] = useState<string | null>(null);
   const londonData = cityRealTimeData["london"];
   
   const handleRouteSelect = (route: RouteInfo) => {
     setSelectedRoute(route);
+    setSelectedStation(null);
   };
-  
+
+  const handleStationSelect = (stationId: string) => {
+    setSelectedStation(stationId);
+    setSelectedRoute(null);
+  };
+
+  const mockMetrics = {
+    currentPassengers: Math.floor(Math.random() * 1000),
+    avgWaitTime: Math.floor(Math.random() * 10),
+    nextTrain: Math.floor(Math.random() * 5),
+  };
+
   return (
     <div className="min-h-screen flex flex-col bg-background">
       <Header />
@@ -61,25 +74,33 @@ const LondonUndergroundAnalysis = () => {
             <TabsList>
               <TabsTrigger value="network">Network Map</TabsTrigger>
               <TabsTrigger value="lines">Underground Lines</TabsTrigger>
-              <TabsTrigger value="model">Model Architecture</TabsTrigger>
+              <TabsTrigger value="stations">Stations</TabsTrigger>
             </TabsList>
             
             <TabsContent value="network">
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <div className="lg:col-span-3 grid grid-cols-1 lg:grid-cols-3 gap-6">
-                  <div className="lg:col-span-2">
-                    <CityMetroNetwork 
-                      cityId="london" 
-                      selectedRoute={selectedRoute ? {
-                        origin: selectedRoute.origin,
-                        destination: selectedRoute.destination,
-                        line: selectedRoute.line
-                      } : undefined}
+                <div className="lg:col-span-2">
+                  <CityMetroNetwork 
+                    cityId="london" 
+                    selectedRoute={selectedRoute ? {
+                      origin: selectedRoute.origin,
+                      destination: selectedRoute.destination,
+                      line: selectedRoute.line
+                    } : undefined}
+                  />
+                </div>
+                <div className="space-y-6">
+                  <StationSelector
+                    selectedStation={selectedStation}
+                    onStationSelect={handleStationSelect}
+                  />
+                  {selectedStation && (
+                    <StationMetrics
+                      stationName={cityMetroNetworks.london.stations.find(s => s.id.toString() === selectedStation)?.name || ""}
+                      metrics={mockMetrics}
                     />
-                  </div>
-                  <div>
-                    <LondonMetroRoutes onRouteSelect={handleRouteSelect} />
-                  </div>
+                  )}
+                  <LondonMetroRoutes onRouteSelect={handleRouteSelect} />
                 </div>
               </div>
             </TabsContent>
