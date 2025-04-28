@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Header from '@/components/Header';
-import CityMetroNetwork from '@/components/CityMetroNetwork';
+import UndergroundMap3D from '@/components/UndergroundMap3D';
 import RealTimeFlowPanel from '@/components/RealTimeFlowPanel';
 import LondonMetroRoutes from '@/components/LondonMetroRoutes';
 import StationSelector from '@/components/StationSelector';
@@ -9,7 +9,7 @@ import DeepLearningArchitecture from '@/components/DeepLearningArchitecture';
 import { cityRealTimeData, londonUndergroundLines, cityMetroNetworks } from '@/data/cityData';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { InfoIcon, MapPin, Train } from 'lucide-react';
+import { MapPin, Train } from 'lucide-react';
 import LineBadge from '@/components/LineBadge';
 
 interface RouteInfo {
@@ -81,13 +81,9 @@ const LondonUndergroundAnalysis = () => {
             <TabsContent value="network">
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 <div className="lg:col-span-2">
-                  <CityMetroNetwork 
-                    cityId="london" 
-                    selectedRoute={selectedRoute ? {
-                      origin: selectedRoute.origin,
-                      destination: selectedRoute.destination,
-                      line: selectedRoute.line
-                    } : undefined}
+                  <UndergroundMap3D 
+                    selectedStation={selectedStation}
+                    onStationSelect={handleStationSelect}
                   />
                 </div>
                 <div className="space-y-6">
@@ -158,29 +154,53 @@ const LondonUndergroundAnalysis = () => {
             <div className="lg:col-span-2">
               <div className="bg-card rounded-lg shadow-md p-6">
                 <h2 className="text-xl font-bold mb-4">London Underground Passenger Flow</h2>
-                <div className="h-80 rounded-md bg-muted/40 overflow-hidden flex items-center justify-center relative">
-                  <div className="absolute inset-0 flex flex-col items-center justify-center bg-secondary/10">
-                    <p className="font-medium text-lg">London Underground Map</p>
-                    <p className="text-sm text-muted-foreground">Interactive network visualization</p>
+                <div className="space-y-4">
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                    <div className="bg-primary/10 p-3 rounded-md">
+                      <p className="text-xs text-muted-foreground">Daily Passengers</p>
+                      <p className="text-xl font-bold">{londonData?.currentPassengerLoad}M</p>
+                    </div>
+                    <div className="bg-primary/10 p-3 rounded-md">
+                      <p className="text-xs text-muted-foreground">Peak Hour Load</p>
+                      <p className="text-xl font-bold">450K</p>
+                    </div>
+                    <div className="bg-primary/10 p-3 rounded-md">
+                      <p className="text-xs text-muted-foreground">Active Trains</p>
+                      <p className="text-xl font-bold">89</p>
+                    </div>
+                    <div className="bg-primary/10 p-3 rounded-md">
+                      <p className="text-xs text-muted-foreground">Avg Wait Time</p>
+                      <p className="text-xl font-bold">3.5m</p>
+                    </div>
                   </div>
-                </div>
-                
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-6">
-                  <div className="bg-primary/10 p-3 rounded-md">
-                    <p className="text-xs text-muted-foreground">Daily Passengers</p>
-                    <p className="text-xl font-bold">{londonData?.currentPassengerLoad}M</p>
+                  
+                  <div className="h-60 bg-muted/20 rounded-lg flex items-center justify-center">
+                    <p className="text-muted-foreground">Passenger flow visualization</p>
                   </div>
-                  <div className="bg-primary/10 p-3 rounded-md">
-                    <p className="text-xs text-muted-foreground">Stations</p>
-                    <p className="text-xl font-bold">270</p>
-                  </div>
-                  <div className="bg-primary/10 p-3 rounded-md">
-                    <p className="text-xs text-muted-foreground">Lines</p>
-                    <p className="text-xl font-bold">11</p>
-                  </div>
-                  <div className="bg-primary/10 p-3 rounded-md">
-                    <p className="text-xs text-muted-foreground">Network Length</p>
-                    <p className="text-xl font-bold">402 km</p>
+                  
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="bg-secondary/20 p-4 rounded-lg">
+                      <h3 className="text-sm font-medium mb-2">Busiest Stations</h3>
+                      <div className="space-y-2">
+                        {['King\'s Cross', 'Victoria', 'Liverpool Street'].map((station, i) => (
+                          <div key={station} className="flex justify-between items-center">
+                            <span className="text-sm">{station}</span>
+                            <Badge variant="secondary">{120 - i * 20}K/hour</Badge>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                    <div className="bg-secondary/20 p-4 rounded-lg">
+                      <h3 className="text-sm font-medium mb-2">Peak Hours</h3>
+                      <div className="space-y-2">
+                        {['08:00 - 09:30', '17:30 - 19:00'].map((time, i) => (
+                          <div key={time} className="flex justify-between items-center">
+                            <span className="text-sm">{time}</span>
+                            <Badge variant="secondary">{i === 0 ? 'Morning' : 'Evening'}</Badge>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
