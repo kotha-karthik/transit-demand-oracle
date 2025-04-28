@@ -1,8 +1,7 @@
-
 import React, { useRef, useMemo, useState } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, Text, Line, useTexture, Stats } from '@react-three/drei';
-import { cityMetroNetworks } from '@/data/cityData';
+import { cityMetroNetworks, londonUndergroundLines } from '@/data/cityData';
 import * as THREE from 'three';
 
 // Memoized station component for better performance
