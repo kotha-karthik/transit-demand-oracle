@@ -3,6 +3,7 @@ import React, { useRef } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, Text } from '@react-three/drei';
 import { cityMetroNetworks } from '@/data/cityData';
+import * as THREE from 'three';
 
 interface Station3DProps {
   position: [number, number, number];

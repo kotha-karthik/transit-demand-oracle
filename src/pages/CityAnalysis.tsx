@@ -9,6 +9,7 @@ import DeepLearningArchitecture from '@/components/DeepLearningArchitecture';
 import { cityRealTimeData, londonUndergroundLines, cityMetroNetworks } from '@/data/cityData';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Alert, AlertDescription } from '@/components/ui/alert';
+import { Badge } from '@/components/ui/badge';
 import { MapPin, Train } from 'lucide-react';
 import LineBadge from '@/components/LineBadge';
 
