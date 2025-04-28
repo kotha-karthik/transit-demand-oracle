@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import Header from '@/components/Header';
 import UndergroundMap3D from '@/components/UndergroundMap3D';
@@ -10,7 +11,7 @@ import { cityRealTimeData, londonUndergroundLines, cityMetroNetworks } from '@/d
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Badge } from '@/components/ui/badge';
-import { MapPin, Train } from 'lucide-react';
+import { MapPin, Train, Navigation } from 'lucide-react';
 import LineBadge from '@/components/LineBadge';
 
 interface RouteInfo {
