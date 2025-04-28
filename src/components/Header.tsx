@@ -24,13 +24,17 @@ const Header = () => {
                 <span>Network Map</span>
               </Link>
             </Button>
-            <Button variant="ghost" size="sm" className="flex items-center gap-1">
-              <Clock className="h-4 w-4" />
-              <span>Real-time Analysis</span>
+            <Button variant="ghost" size="sm" asChild>
+              <Link to="/city-analysis" className="flex items-center gap-1">
+                <Clock className="h-4 w-4" />
+                <span>Real-time Analysis</span>
+              </Link>
             </Button>
-            <Button variant="ghost" size="sm" className="flex items-center gap-1">
-              <BarChart className="h-4 w-4" />
-              <span>Forecasting</span>
+            <Button variant="ghost" size="sm" asChild>
+              <Link to="/forecasting" className="flex items-center gap-1">
+                <BarChart className="h-4 w-4" />
+                <span>Forecasting</span>
+              </Link>
             </Button>
           </nav>
           
