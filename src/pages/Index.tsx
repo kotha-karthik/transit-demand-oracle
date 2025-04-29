@@ -2,9 +2,9 @@
 import React from 'react';
 import { Navigate } from 'react-router-dom';
 
-// Redirect to London Underground analysis directly
+// Redirect to the Network Map page directly
 const Index = () => {
-  return <Navigate to="/city-analysis" replace />;
+  return <Navigate to="/network" replace />;
 };
 
 export default Index;

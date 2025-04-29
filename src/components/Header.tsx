@@ -2,7 +2,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { Train, MapPin, Clock, BarChart } from 'lucide-react';
+import { Train, MapPin, Clock, BarChart, Settings } from 'lucide-react';
 
 const Header = () => {
   return (
@@ -19,21 +19,27 @@ const Header = () => {
           
           <nav className="hidden md:flex items-center space-x-1">
             <Button variant="ghost" size="sm" asChild>
-              <Link to="/city-analysis" className="flex items-center gap-1">
+              <Link to="/network" className="flex items-center gap-1">
                 <MapPin className="h-4 w-4" />
                 <span>Network Map</span>
               </Link>
             </Button>
             <Button variant="ghost" size="sm" asChild>
-              <Link to="/city-analysis" className="flex items-center gap-1">
+              <Link to="/analytics" className="flex items-center gap-1">
                 <Clock className="h-4 w-4" />
-                <span>Real-time Analysis</span>
+                <span>Analytics</span>
               </Link>
             </Button>
             <Button variant="ghost" size="sm" asChild>
               <Link to="/forecasting" className="flex items-center gap-1">
                 <BarChart className="h-4 w-4" />
                 <span>Forecasting</span>
+              </Link>
+            </Button>
+            <Button variant="ghost" size="sm" asChild>
+              <Link to="/settings" className="flex items-center gap-1">
+                <Settings className="h-4 w-4" />
+                <span>Settings</span>
               </Link>
             </Button>
           </nav>
