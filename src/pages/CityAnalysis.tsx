@@ -1,16 +1,20 @@
-import React, { useState } from 'react';
+
+import React, { useState, useEffect } from 'react';
 import Header from '@/components/Header';
 import UndergroundMap3D from '@/components/UndergroundMap3D';
 import RealTimeFlowPanel from '@/components/RealTimeFlowPanel';
 import LondonMetroRoutes from '@/components/LondonMetroRoutes';
 import StationSelector from '@/components/StationSelector';
 import StationMetrics from '@/components/StationMetrics';
-import DeepLearningArchitecture from '@/components/DeepLearningArchitecture';
+import StationArrivals from '@/components/StationArrivals';
 import { cityRealTimeData, londonUndergroundLines, cityMetroNetworks } from '@/data/cityData';
+import { transportApi } from '@/services/transportApi';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Badge } from '@/components/ui/badge';
-import { MapPin, Train, Navigation } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { useNavigate } from 'react-router-dom';
+import { MapPin, Train, Navigation, BarChart3, TrendingUp, BrainCircuit } from 'lucide-react';
 import LineBadge from '@/components/LineBadge';
 
 interface RouteInfo {
@@ -25,7 +29,21 @@ interface RouteInfo {
 const LondonUndergroundAnalysis = () => {
   const [selectedRoute, setSelectedRoute] = useState<RouteInfo | null>(null);
   const [selectedStation, setSelectedStation] = useState<string | null>(null);
+  const [lineStatuses, setLineStatuses] = useState<any[]>([]);
+  const navigate = useNavigate();
+  
   const londonData = cityRealTimeData["london"];
+  
+  useEffect(() => {
+    const fetchLineStatuses = async () => {
+      const response = await transportApi.getLineStatuses();
+      if (response.data) {
+        setLineStatuses(response.data);
+      }
+    };
+    
+    fetchLineStatuses();
+  }, []);
   
   const handleRouteSelect = (route: RouteInfo) => {
     setSelectedRoute(route);
@@ -37,10 +55,9 @@ const LondonUndergroundAnalysis = () => {
     setSelectedRoute(null);
   };
 
-  const mockMetrics = {
-    currentPassengers: Math.floor(Math.random() * 1000),
-    avgWaitTime: Math.floor(Math.random() * 10),
-    nextTrain: Math.floor(Math.random() * 5),
+  const getStationName = (stationId: string | null) => {
+    if (!stationId) return null;
+    return cityMetroNetworks.london.stations.find(s => s.id.toString() === stationId)?.name || null;
   };
 
   return (
@@ -56,9 +73,23 @@ const LondonUndergroundAnalysis = () => {
               </p>
             </div>
             
-            <div className="flex items-center gap-2">
-              <Train className="h-5 w-5 text-primary" />
-              <span className="font-medium">Transport for London</span>
+            <div className="flex items-center gap-3">
+              <Button 
+                variant="outline" 
+                onClick={() => navigate('/forecasting')}
+                className="flex items-center gap-2"
+              >
+                <BarChart3 className="h-4 w-4" />
+                <span>Basic Forecasting</span>
+              </Button>
+              
+              <Button 
+                onClick={() => navigate('/advanced-forecasting')}
+                className="flex items-center gap-2"
+              >
+                <TrendingUp className="h-4 w-4" />
+                <span>Advanced Analytics</span>
+              </Button>
             </div>
           </div>
           
@@ -93,68 +124,115 @@ const LondonUndergroundAnalysis = () => {
                     onStationSelect={handleStationSelect}
                   />
                   {selectedStation && (
-                    <StationMetrics
-                      stationName={cityMetroNetworks.london.stations.find(s => s.id.toString() === selectedStation)?.name || ""}
-                      metrics={mockMetrics}
-                    />
+                    <>
+                      <StationMetrics
+                        stationName={getStationName(selectedStation) || ""}
+                        metrics={{
+                          currentPassengers: Math.floor(Math.random() * 1000),
+                          avgWaitTime: Math.floor(Math.random() * 10),
+                          nextTrain: Math.floor(Math.random() * 5),
+                        }}
+                      />
+                      <StationArrivals 
+                        stationId={selectedStation} 
+                        stationName={getStationName(selectedStation)}
+                      />
+                    </>
                   )}
-                  <LondonMetroRoutes onRouteSelect={handleRouteSelect} />
+                  {!selectedStation && (
+                    <LondonMetroRoutes onRouteSelect={handleRouteSelect} />
+                  )}
                 </div>
               </div>
             </TabsContent>
             
             <TabsContent value="lines">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {londonUndergroundLines.map(line => (
-                  <div key={line.id} className="border rounded-md overflow-hidden">
-                    <div 
-                      className="p-3 text-white font-medium flex justify-between items-center" 
-                      style={{ backgroundColor: line.color }}
-                    >
-                      <span>{line.name}</span>
-                      <span className="text-xs bg-white/20 px-2 py-1 rounded">
-                        {cityRealTimeData.london?.lineStatuses?.find(l => l.line === line.id)?.status || "Unknown"}
-                      </span>
-                    </div>
-                    <div className="p-4">
-                      <div className="grid grid-cols-2 gap-3 mb-3">
-                        <div className="bg-muted/50 p-2 rounded-md text-center">
-                          <div className="text-xs text-muted-foreground">Current Load</div>
-                          <div className="font-medium">
-                            {["Low", "Medium", "High"][Math.floor(Math.random() * 3)]}
+                {londonUndergroundLines.map(line => {
+                  const lineStatus = lineStatuses.find(s => s.id === line.id) || { 
+                    status: "Unknown", 
+                    description: "Status information unavailable" 
+                  };
+                  
+                  return (
+                    <div key={line.id} className="border rounded-md overflow-hidden">
+                      <div 
+                        className="p-3 text-white font-medium flex justify-between items-center" 
+                        style={{ backgroundColor: line.color }}
+                      >
+                        <span>{line.name}</span>
+                        <Badge className={`text-xs ${
+                          lineStatus.status === "Good Service" ? "bg-green-500" :
+                          lineStatus.status === "Minor Delays" ? "bg-amber-500" : 
+                          "bg-red-500"
+                        } text-white`}>
+                          {lineStatus.status}
+                        </Badge>
+                      </div>
+                      <div className="p-4">
+                        <div className="grid grid-cols-2 gap-3 mb-3">
+                          <div className="bg-muted/50 p-2 rounded-md text-center">
+                            <div className="text-xs text-muted-foreground">Current Load</div>
+                            <div className="font-medium">
+                              {["Low", "Medium", "High"][Math.floor(Math.random() * 3)]}
+                            </div>
+                          </div>
+                          <div className="bg-muted/50 p-2 rounded-md text-center">
+                            <div className="text-xs text-muted-foreground">Prediction</div>
+                            <div className="font-medium">
+                              {["Increasing", "Stable", "Decreasing"][Math.floor(Math.random() * 3)]}
+                            </div>
                           </div>
                         </div>
-                        <div className="bg-muted/50 p-2 rounded-md text-center">
-                          <div className="text-xs text-muted-foreground">Prediction</div>
-                          <div className="font-medium">
-                            {["Increasing", "Stable", "Decreasing"][Math.floor(Math.random() * 3)]}
-                          </div>
+                        <div className="text-xs text-muted-foreground">
+                          {lineStatus.description}
                         </div>
                       </div>
-                      <div className="text-xs text-muted-foreground">
-                        {line.id === "central" ? 
-                          "Partial closure between Liverpool Street and Holborn" : 
-                          line.id === "northern" ? 
-                          "Planned engineering works between Camden Town and Kennington" :
-                          line.id === "victoria" ?
-                          "Minor delays due to earlier signal failure at Victoria" :
-                          "Good service on all stations"}
-                      </div>
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             </TabsContent>
             
-            <TabsContent value="model">
-              <DeepLearningArchitecture />
+            <TabsContent value="stations">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {cityMetroNetworks.london.stations.map(station => {
+                  const stationLines = cityMetroNetworks.london.lines
+                    .filter(l => l.source === station.id || l.target === station.id)
+                    .map(l => l.line)
+                    .filter((value, index, self) => value !== undefined && self.indexOf(value) === index) as string[];
+                  
+                  return (
+                    <div 
+                      key={station.id} 
+                      className={`border p-4 rounded-md cursor-pointer transition-all ${
+                        selectedStation === station.id.toString() ? 'bg-primary/10 border-primary/30' : 'hover:bg-accent/10'
+                      }`}
+                      onClick={() => handleStationSelect(station.id.toString())}
+                    >
+                      <h3 className="font-medium">{station.name}</h3>
+                      <div className="mt-2 flex flex-wrap gap-1">
+                        {stationLines.map(lineId => (
+                          <LineBadge key={lineId} lineId={lineId} small />
+                        ))}
+                      </div>
+                      <div className="mt-3 text-xs text-muted-foreground">
+                        Tap to view station details
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
             </TabsContent>
           </Tabs>
           
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <div className="lg:col-span-2">
               <div className="bg-card rounded-lg shadow-md p-6">
-                <h2 className="text-xl font-bold mb-4">London Underground Passenger Flow</h2>
+                <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
+                  <BrainCircuit className="h-5 w-5 text-primary" />
+                  <span>London Underground Passenger Flow</span>
+                </h2>
                 <div className="space-y-4">
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                     <div className="bg-primary/10 p-3 rounded-md">
@@ -176,7 +254,16 @@ const LondonUndergroundAnalysis = () => {
                   </div>
                   
                   <div className="h-60 bg-muted/20 rounded-lg flex items-center justify-center">
-                    <p className="text-muted-foreground">Passenger flow visualization</p>
+                    <div className="text-center">
+                      <p className="text-muted-foreground mb-2">Passenger flow visualization</p>
+                      <Button 
+                        onClick={() => navigate('/advanced-forecasting')}
+                        variant="outline"
+                        size="sm"
+                      >
+                        View Detailed Analysis
+                      </Button>
+                    </div>
                   </div>
                   
                   <div className="grid grid-cols-2 gap-4">
@@ -219,7 +306,7 @@ const LondonUndergroundAnalysis = () => {
       <footer className="bg-primary/5 py-4 border-t">
         <div className="container mx-auto text-center text-sm text-muted-foreground">
           <p>London Underground Passenger Flow Forecasting System</p>
-          <p className="text-xs mt-1">Data Source: Transport for London Open Data</p>
+          <p className="text-xs mt-1">Data Source: Transport for London API</p>
         </div>
       </footer>
     </div>

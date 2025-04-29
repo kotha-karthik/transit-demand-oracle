@@ -8,6 +8,7 @@ import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import CityAnalysis from "./pages/CityAnalysis";
 import Forecasting from "./pages/Forecasting";
+import AdvancedForecasting from "./pages/AdvancedForecasting";
 
 const queryClient = new QueryClient();
 
@@ -21,6 +22,7 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/city-analysis" element={<CityAnalysis />} />
           <Route path="/forecasting" element={<Forecasting />} />
+          <Route path="/advanced-forecasting" element={<AdvancedForecasting />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
