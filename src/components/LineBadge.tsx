@@ -9,14 +9,18 @@ interface LineBadgeProps {
   className?: string;
   showName?: boolean;
   size?: 'sm' | 'md' | 'lg';
+  small?: boolean; // Added small property for backward compatibility
 }
 
-const LineBadge: React.FC<LineBadgeProps> = ({ lineId, className, showName = true, size = 'md' }) => {
+const LineBadge: React.FC<LineBadgeProps> = ({ lineId, className, showName = true, size = 'md', small = false }) => {
   const line = londonUndergroundLines.find(l => l.id === lineId);
   
   if (!line) {
     return null;
   }
+  
+  // If small prop is provided, use sm size (for backward compatibility)
+  const actualSize = small ? 'sm' : size;
   
   const sizeClasses = {
     sm: 'h-2 w-2',
@@ -39,7 +43,7 @@ const LineBadge: React.FC<LineBadgeProps> = ({ lineId, className, showName = tru
         borderColor: isDarkColor ? 'rgba(255,255,255,0.2)' : 'rgba(0,0,0,0.1)'
       }}
     >
-      <div className={cn("rounded-full", sizeClasses[size])}></div>
+      <div className={cn("rounded-full", sizeClasses[actualSize])}></div>
       {showName && line.name}
     </Badge>
   );

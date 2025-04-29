@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import Header from '@/components/Header';
@@ -38,6 +37,9 @@ const AdvancedForecasting = () => {
       format(selectedDate, 'yyyy-MM-dd')
     ),
   });
+  
+  // Extract error message from the error object
+  const errorMessage = error ? (error instanceof Error ? error.message : String(error)) : null;
   
   const mlModels = [
     { id: 'lstm', name: 'LSTM Time Series', accuracy: '92.4%', description: 'Long Short-Term Memory neural network optimized for sequential data' },
@@ -141,10 +143,10 @@ const AdvancedForecasting = () => {
                     <div className="w-full h-[300px] flex items-center justify-center">
                       <Skeleton className="w-full h-full" />
                     </div>
-                  ) : error ? (
+                  ) : errorMessage ? (
                     <Alert variant="destructive">
                       <AlertTriangle className="h-4 w-4" />
-                      <AlertDescription>{error}</AlertDescription>
+                      <AlertDescription>{errorMessage}</AlertDescription>
                     </Alert>
                   ) : forecastData?.data ? (
                     <div className="h-[300px]">
