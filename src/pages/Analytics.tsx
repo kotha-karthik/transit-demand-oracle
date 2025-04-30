@@ -15,6 +15,10 @@ const Analytics = () => {
   const [selectedTab, setSelectedTab] = useState('realtime');
   const [selectedView, setSelectedView] = useState('flow');
   const [selectedTimeframe, setSelectedTimeframe] = useState('day');
+  const [selectedStation, setSelectedStation] = useState<string | null>(null);
+
+  // Default to London for cityId
+  const defaultCityId = 'london';
 
   const timeframes = [
     { value: 'hour', label: 'Last Hour' },
@@ -112,7 +116,7 @@ const Analytics = () => {
           </CardHeader>
           <CardContent>
             <TabsContent value="realtime" className="mt-4">
-              <RealTimeFlowPanel />
+              <RealTimeFlowPanel cityId={defaultCityId} />
             </TabsContent>
             <TabsContent value="historical" className="mt-4">
               <div className="h-[400px]">
@@ -129,7 +133,8 @@ const Analytics = () => {
               <CardDescription>Real-time passenger arrivals and departures</CardDescription>
             </CardHeader>
             <CardContent>
-              <StationArrivals />
+              <StationArrivals stationId={selectedStation} stationName={selectedStation ? 
+                cityMetroNetworks.london.stations.find(s => s.id === selectedStation)?.name || null : null} />
             </CardContent>
           </Card>
 
@@ -147,7 +152,7 @@ const Analytics = () => {
                         className="w-3 h-3 rounded-full" 
                         style={{ backgroundColor: ['#DC241F', '#0019A8', '#9B0056', '#007229', '#F3A9BB'][i] }}
                       ></div>
-                      <span className="font-medium">Line {line.id.toString()}</span>
+                      <span className="font-medium">Line {line.id}</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <span className="text-sm font-medium">{Math.floor(Math.random() * 2000 + 500)} pax/hr</span>

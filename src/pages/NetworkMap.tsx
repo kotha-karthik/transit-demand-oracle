@@ -82,7 +82,7 @@ const NetworkMap = () => {
                   </TabsContent>
                   <TabsContent value="metrics" className="mt-0 pt-3">
                     {currentStation ? (
-                      <StationMetrics stationId={selectedStation!} />
+                      <StationMetrics stationId={selectedStation || ""} />
                     ) : (
                       <div className="flex h-[400px] items-center justify-center text-muted-foreground">
                         Select a station to view metrics
