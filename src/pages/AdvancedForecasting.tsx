@@ -19,14 +19,15 @@ import { Calendar } from '@/components/ui/calendar';
 import DeepLearningArchitecture from '@/components/DeepLearningArchitecture';
 import PredictionModel from '@/components/PredictionModel';
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
-import { Bar, BarChart, XAxis, YAxis, ResponsiveContainer, Legend } from 'recharts';
+import { Bar, BarChart, XAxis, YAxis, ResponsiveContainer, Legend, LineChart, Line, AreaChart, Area } from 'recharts';
 import { Form, FormField, FormItem, FormLabel, FormControl } from '@/components/ui/form';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
-import { ChevronRight, Calculator, TrendingUp, RefreshCcw, Activity } from 'lucide-react';
+import { ChevronRight, Calculator, TrendingUp, RefreshCcw, Activity, Calendar as CalendarIcon } from 'lucide-react';
 import { toast } from '@/components/ui/use-toast';
 import { cityMetroNetworks } from '@/data/cityData';
+import CitySelector from '@/components/CitySelector';
 
 // Form schema for origin-destination prediction
 const originDestinationSchema = z.object({
@@ -44,6 +45,22 @@ const originDestinationSchema = z.object({
   }),
 });
 
+// Advanced flow forecast form schema
+const advancedFlowSchema = z.object({
+  city: z.string({
+    required_error: "Please select a city.",
+  }),
+  timeRange: z.string({
+    required_error: "Please select a time range.",
+  }),
+  forecastPeriod: z.string({
+    required_error: "Please select a forecast period.",
+  }),
+  modelType: z.string({
+    required_error: "Please select a model type.",
+  }),
+});
+
 const AdvancedForecasting = () => {
   const [selectedModel, setSelectedModel] = useState('transformer');
   const [loading, setLoading] = useState(false);
@@ -52,6 +69,10 @@ const AdvancedForecasting = () => {
   const [activeTab, setActiveTab] = useState('architecture');
   const [predictionTab, setPredictionTab] = useState('route');
   const [routePrediction, setRoutePrediction] = useState<any>(null);
+  const [selectedCity, setSelectedCity] = useState('london');
+  const [passengerFlowForecast, setPassengerFlowForecast] = useState<any>(null);
+  const [forecastLoading, setForecastLoading] = useState(false);
+  const [advancedForecastType, setAdvancedForecastType] = useState('hourly');
 
   // Form for origin-destination prediction
   const form = useForm<z.infer<typeof originDestinationSchema>>({
@@ -64,8 +85,28 @@ const AdvancedForecasting = () => {
     },
   });
 
+  // Form for advanced flow forecasting
+  const advancedForm = useForm<z.infer<typeof advancedFlowSchema>>({
+    resolver: zodResolver(advancedFlowSchema),
+    defaultValues: {
+      city: "london",
+      timeRange: "24h",
+      forecastPeriod: "7d",
+      modelType: "transformer",
+    },
+  });
+
   // Get london stations for the dropdown
   const stations = cityMetroNetworks.london.stations;
+
+  // Available cities for selection
+  const availableCities = [
+    { id: "london", name: "London", country: "UK" },
+    { id: "paris", name: "Paris", country: "France" },
+    { id: "newyork", name: "New York", country: "USA" },
+    { id: "tokyo", name: "Tokyo", country: "Japan" },
+    { id: "berlin", name: "Berlin", country: "Germany" },
+  ];
 
   // Times for selection
   const times = Array.from({ length: 24 }, (_, i) => {
@@ -96,6 +137,129 @@ const AdvancedForecasting = () => {
       });
     } finally {
       setLoading(false);
+    }
+  };
+
+  // Generate advanced passenger flow forecast
+  const generateAdvancedForecast = async (values: z.infer<typeof advancedFlowSchema>) => {
+    setForecastLoading(true);
+    try {
+      // Mock advanced forecast data generation
+      // In a real application, this would call an API
+      
+      setTimeout(() => {
+        // Generate different data based on forecast type
+        let forecastData;
+        
+        if (advancedForecastType === 'hourly') {
+          forecastData = {
+            type: 'hourly',
+            title: 'Hourly Passenger Flow Forecast',
+            description: '24-hour forecast with 15-minute intervals',
+            data: Array.from({ length: 24 }, (_, hour) => {
+              return Array.from({ length: 4 }, (_, quarter) => {
+                const timeString = `${hour.toString().padStart(2, '0')}:${(quarter * 15).toString().padStart(2, '0')}`;
+                return {
+                  time: timeString,
+                  predicted: Math.floor(Math.random() * 3000) + 500 + (hour >= 7 && hour <= 9 ? 2000 : 0) + (hour >= 16 && hour <= 18 ? 1800 : 0),
+                  actual: hour < new Date().getHours() ? Math.floor(Math.random() * 3000) + 500 + (hour >= 7 && hour <= 9 ? 2000 : 0) + (hour >= 16 && hour <= 18 ? 1800 : 0) : null,
+                  confidence: Math.random() * 10 + 85,
+                };
+              });
+            }).flat(),
+            metrics: {
+              peakTime: '08:15',
+              peakVolume: '4,235',
+              totalDaily: '89,750',
+              avgAccuracy: '93.2%',
+              anomalies: 2
+            }
+          };
+        } else if (advancedForecastType === 'daily') {
+          forecastData = {
+            type: 'daily',
+            title: 'Daily Passenger Flow Forecast',
+            description: '7-day forecast with daily aggregates',
+            data: Array.from({ length: 7 }, (_, i) => {
+              const date = new Date();
+              date.setDate(date.getDate() + i);
+              const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+              const dayName = dayNames[date.getDay()];
+              const isWeekend = date.getDay() === 0 || date.getDay() === 6;
+              
+              return {
+                date: `${date.getDate()}/${date.getMonth() + 1}`,
+                day: dayName,
+                predicted: Math.floor(Math.random() * 30000) + (isWeekend ? 50000 : 80000),
+                trend: Math.random() > 0.5 ? Math.random() * 8 : -Math.random() * 5,
+                confidence: Math.random() * 5 + 90
+              };
+            }),
+            metrics: {
+              peakDay: 'Friday',
+              peakVolume: '92,150',
+              avgWeekday: '85,320',
+              avgWeekend: '64,780',
+              weeklyTotal: '574,210'
+            }
+          };
+        } else {
+          // Monthly forecast
+          forecastData = {
+            type: 'monthly',
+            title: 'Monthly Passenger Flow Forecast',
+            description: '6-month forecast with monthly aggregates',
+            data: Array.from({ length: 6 }, (_, i) => {
+              const date = new Date();
+              date.setMonth(date.getMonth() + i);
+              const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 
+                                  'July', 'August', 'September', 'October', 'November', 'December'];
+              const monthName = monthNames[date.getMonth()];
+              const isSummer = date.getMonth() >= 5 && date.getMonth() <= 7;
+              const isWinter = date.getMonth() >= 10 || date.getMonth() <= 1;
+              
+              let baseValue;
+              if (isSummer) baseValue = 1800000; // Summer - lower ridership
+              else if (isWinter) baseValue = 2200000; // Winter - higher ridership
+              else baseValue = 2000000; // Spring/Fall - average ridership
+              
+              return {
+                month: monthName,
+                predicted: Math.floor(Math.random() * 300000) + baseValue,
+                trend: ((Math.random() > 0.5 ? 1 : -1) * Math.random() * 12).toFixed(1),
+                seasonalAdjustment: isSummer ? 'Summer vacation' : 
+                                    isWinter ? 'Winter holidays' : 'Standard',
+                confidence: (Math.random() * 8 + 85).toFixed(1)
+              };
+            }),
+            metrics: {
+              peakMonth: 'December',
+              lowestMonth: 'July',
+              annualTrend: '+3.2%',
+              seasonalVariation: '18.5%',
+              yearlyEstimate: '24.3M'
+            }
+          };
+        }
+        
+        setPassengerFlowForecast(forecastData);
+        
+        toast({
+          title: "Advanced Forecast Generated",
+          description: `${advancedForecastType.charAt(0).toUpperCase() + advancedForecastType.slice(1)} forecast has been successfully generated.`,
+        });
+        
+        setForecastLoading(false);
+      }, 1500); // Simulate API delay
+      
+    } catch (error) {
+      console.error("Error generating advanced forecast:", error);
+      toast({
+        title: "Error",
+        description: "Failed to generate advanced forecast. Please try again.",
+        variant: "destructive",
+      });
+      setForecastLoading(false);
     }
   };
 
@@ -172,6 +336,328 @@ const AdvancedForecasting = () => {
             </Badge>
           </div>
         </div>
+        
+        {/* New Advanced Passenger Flow Forecasting Section */}
+        <Card>
+          <CardHeader>
+            <CardTitle>Advanced Passenger Flow Forecasting</CardTitle>
+            <CardDescription>
+              High-precision forecasting using multi-modal deep learning
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Form {...advancedForm}>
+              <form onSubmit={advancedForm.handleSubmit(generateAdvancedForecast)} className="space-y-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                  <FormField
+                    control={advancedForm.control}
+                    name="city"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>City Network</FormLabel>
+                        <FormControl>
+                          <Select onValueChange={field.onChange} defaultValue={field.value}>
+                            <SelectTrigger>
+                              <SelectValue placeholder="Select city" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              {availableCities.map((city) => (
+                                <SelectItem key={city.id} value={city.id}>
+                                  {city.name}, {city.country}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                        </FormControl>
+                      </FormItem>
+                    )}
+                  />
+                  
+                  <FormField
+                    control={advancedForm.control}
+                    name="timeRange"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Time Granularity</FormLabel>
+                        <FormControl>
+                          <Select onValueChange={field.onChange} defaultValue={field.value}>
+                            <SelectTrigger>
+                              <SelectValue placeholder="Select time range" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="15m">15 Minutes</SelectItem>
+                              <SelectItem value="30m">30 Minutes</SelectItem>
+                              <SelectItem value="1h">Hourly</SelectItem>
+                              <SelectItem value="24h">Daily</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </FormControl>
+                      </FormItem>
+                    )}
+                  />
+                  
+                  <FormField
+                    control={advancedForm.control}
+                    name="forecastPeriod"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Forecast Period</FormLabel>
+                        <FormControl>
+                          <Select onValueChange={field.onChange} defaultValue={field.value}>
+                            <SelectTrigger>
+                              <SelectValue placeholder="Select forecast period" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="1d">1 Day</SelectItem>
+                              <SelectItem value="7d">7 Days</SelectItem>
+                              <SelectItem value="30d">30 Days</SelectItem>
+                              <SelectItem value="90d">3 Months</SelectItem>
+                              <SelectItem value="180d">6 Months</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </FormControl>
+                      </FormItem>
+                    )}
+                  />
+                  
+                  <FormField
+                    control={advancedForm.control}
+                    name="modelType"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Model Type</FormLabel>
+                        <FormControl>
+                          <Select onValueChange={field.onChange} defaultValue={field.value}>
+                            <SelectTrigger>
+                              <SelectValue placeholder="Select model type" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="transformer">Transformer</SelectItem>
+                              <SelectItem value="lstm">LSTM</SelectItem>
+                              <SelectItem value="ensemble">Ensemble</SelectItem>
+                              <SelectItem value="bayesian">Bayesian</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </FormControl>
+                      </FormItem>
+                    )}
+                  />
+                </div>
+                
+                <div className="flex flex-col sm:flex-row gap-4 items-center justify-between">
+                  <div className="flex gap-2">
+                    <Button variant="outline" type="button" onClick={() => setAdvancedForecastType('hourly')} 
+                      className={advancedForecastType === 'hourly' ? 'bg-primary/20' : ''}>
+                      Hourly
+                    </Button>
+                    <Button variant="outline" type="button" onClick={() => setAdvancedForecastType('daily')}
+                      className={advancedForecastType === 'daily' ? 'bg-primary/20' : ''}>
+                      Daily
+                    </Button>
+                    <Button variant="outline" type="button" onClick={() => setAdvancedForecastType('monthly')}
+                      className={advancedForecastType === 'monthly' ? 'bg-primary/20' : ''}>
+                      Monthly
+                    </Button>
+                  </div>
+                  
+                  <Button type="submit" disabled={forecastLoading} className="w-full sm:w-auto">
+                    {forecastLoading ? (
+                      <>
+                        <RefreshCcw className="mr-2 h-4 w-4 animate-spin" /> Processing...
+                      </>
+                    ) : (
+                      <>
+                        <TrendingUp className="mr-2 h-4 w-4" /> Generate Advanced Forecast
+                      </>
+                    )}
+                  </Button>
+                </div>
+              </form>
+            </Form>
+            
+            {passengerFlowForecast && (
+              <div className="mt-6 space-y-6">
+                <div>
+                  <h3 className="text-lg font-medium">{passengerFlowForecast.title}</h3>
+                  <p className="text-sm text-muted-foreground">{passengerFlowForecast.description}</p>
+                </div>
+                
+                <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
+                  {passengerFlowForecast.type === 'hourly' && (
+                    <>
+                      <div className="bg-secondary/20 rounded-lg p-3">
+                        <div className="text-xs text-muted-foreground">Peak Time</div>
+                        <div className="text-xl font-bold">{passengerFlowForecast.metrics.peakTime}</div>
+                      </div>
+                      <div className="bg-secondary/20 rounded-lg p-3">
+                        <div className="text-xs text-muted-foreground">Peak Volume</div>
+                        <div className="text-xl font-bold">{passengerFlowForecast.metrics.peakVolume}</div>
+                      </div>
+                      <div className="bg-secondary/20 rounded-lg p-3">
+                        <div className="text-xs text-muted-foreground">Total Daily</div>
+                        <div className="text-xl font-bold">{passengerFlowForecast.metrics.totalDaily}</div>
+                      </div>
+                      <div className="bg-secondary/20 rounded-lg p-3">
+                        <div className="text-xs text-muted-foreground">Avg. Accuracy</div>
+                        <div className="text-xl font-bold">{passengerFlowForecast.metrics.avgAccuracy}</div>
+                      </div>
+                      <div className="bg-secondary/20 rounded-lg p-3">
+                        <div className="text-xs text-muted-foreground">Anomalies</div>
+                        <div className="text-xl font-bold">{passengerFlowForecast.metrics.anomalies}</div>
+                      </div>
+                    </>
+                  )}
+                  
+                  {passengerFlowForecast.type === 'daily' && (
+                    <>
+                      <div className="bg-secondary/20 rounded-lg p-3">
+                        <div className="text-xs text-muted-foreground">Peak Day</div>
+                        <div className="text-xl font-bold">{passengerFlowForecast.metrics.peakDay}</div>
+                      </div>
+                      <div className="bg-secondary/20 rounded-lg p-3">
+                        <div className="text-xs text-muted-foreground">Peak Volume</div>
+                        <div className="text-xl font-bold">{passengerFlowForecast.metrics.peakVolume}</div>
+                      </div>
+                      <div className="bg-secondary/20 rounded-lg p-3">
+                        <div className="text-xs text-muted-foreground">Avg. Weekday</div>
+                        <div className="text-xl font-bold">{passengerFlowForecast.metrics.avgWeekday}</div>
+                      </div>
+                      <div className="bg-secondary/20 rounded-lg p-3">
+                        <div className="text-xs text-muted-foreground">Avg. Weekend</div>
+                        <div className="text-xl font-bold">{passengerFlowForecast.metrics.avgWeekend}</div>
+                      </div>
+                      <div className="bg-secondary/20 rounded-lg p-3">
+                        <div className="text-xs text-muted-foreground">Weekly Total</div>
+                        <div className="text-xl font-bold">{passengerFlowForecast.metrics.weeklyTotal}</div>
+                      </div>
+                    </>
+                  )}
+                  
+                  {passengerFlowForecast.type === 'monthly' && (
+                    <>
+                      <div className="bg-secondary/20 rounded-lg p-3">
+                        <div className="text-xs text-muted-foreground">Peak Month</div>
+                        <div className="text-xl font-bold">{passengerFlowForecast.metrics.peakMonth}</div>
+                      </div>
+                      <div className="bg-secondary/20 rounded-lg p-3">
+                        <div className="text-xs text-muted-foreground">Lowest Month</div>
+                        <div className="text-xl font-bold">{passengerFlowForecast.metrics.lowestMonth}</div>
+                      </div>
+                      <div className="bg-secondary/20 rounded-lg p-3">
+                        <div className="text-xs text-muted-foreground">Annual Trend</div>
+                        <div className="text-xl font-bold">{passengerFlowForecast.metrics.annualTrend}</div>
+                      </div>
+                      <div className="bg-secondary/20 rounded-lg p-3">
+                        <div className="text-xs text-muted-foreground">Seasonal Var.</div>
+                        <div className="text-xl font-bold">{passengerFlowForecast.metrics.seasonalVariation}</div>
+                      </div>
+                      <div className="bg-secondary/20 rounded-lg p-3">
+                        <div className="text-xs text-muted-foreground">Yearly Est.</div>
+                        <div className="text-xl font-bold">{passengerFlowForecast.metrics.yearlyEstimate}</div>
+                      </div>
+                    </>
+                  )}
+                </div>
+                
+                <div className="h-[400px]">
+                  <ChartContainer className="h-full w-full" config={{}}>
+                    {passengerFlowForecast.type === 'hourly' && (
+                      <LineChart data={passengerFlowForecast.data.filter((_: any, i: number) => i % 2 === 0)}>
+                        <XAxis dataKey="time" />
+                        <YAxis />
+                        <ChartTooltip content={<ChartTooltipContent />} />
+                        <Legend />
+                        <Line 
+                          type="monotone" 
+                          dataKey="predicted" 
+                          name="Predicted Flow" 
+                          stroke="#8B5CF6" 
+                          strokeWidth={2} 
+                          dot={false} 
+                        />
+                        <Line 
+                          type="monotone" 
+                          dataKey="actual" 
+                          name="Actual Flow" 
+                          stroke="#06b6d4" 
+                          strokeWidth={2} 
+                          dot={false} 
+                        />
+                      </LineChart>
+                    )}
+                    
+                    {passengerFlowForecast.type === 'daily' && (
+                      <BarChart data={passengerFlowForecast.data}>
+                        <XAxis dataKey="day" />
+                        <YAxis />
+                        <ChartTooltip content={<ChartTooltipContent />} />
+                        <Legend />
+                        <Bar 
+                          dataKey="predicted" 
+                          name="Passenger Volume" 
+                          fill="#8B5CF6" 
+                          radius={[4, 4, 0, 0]} 
+                        />
+                      </BarChart>
+                    )}
+                    
+                    {passengerFlowForecast.type === 'monthly' && (
+                      <AreaChart data={passengerFlowForecast.data}>
+                        <XAxis dataKey="month" />
+                        <YAxis />
+                        <ChartTooltip content={<ChartTooltipContent />} />
+                        <Legend />
+                        <Area 
+                          type="monotone" 
+                          dataKey="predicted" 
+                          name="Monthly Passengers" 
+                          stroke="#8B5CF6" 
+                          fill="#8B5CF6" 
+                          fillOpacity={0.3} 
+                        />
+                      </AreaChart>
+                    )}
+                  </ChartContainer>
+                </div>
+                
+                {passengerFlowForecast.type === 'hourly' && (
+                  <div className="bg-secondary/10 p-4 rounded-lg">
+                    <h4 className="text-sm font-medium mb-2">Anomaly Detection</h4>
+                    <div className="text-sm text-muted-foreground">
+                      The model has detected 2 potential anomalies in passenger flow patterns:
+                      <ul className="list-disc pl-5 mt-1">
+                        <li>Unexpected surge at 08:15 (32% above normal patterns)</li>
+                        <li>Unusual decline at 17:30 (27% below expected volume)</li>
+                      </ul>
+                    </div>
+                  </div>
+                )}
+                
+                {passengerFlowForecast.type === 'daily' && (
+                  <div className="bg-secondary/10 p-4 rounded-lg">
+                    <h4 className="text-sm font-medium mb-2">Weekly Pattern Analysis</h4>
+                    <div className="text-sm text-muted-foreground">
+                      <p>The forecast indicates a standard weekly pattern with peak ridership on Fridays (92,150 passengers) 
+                      and lowest volume on Sundays (58,620 passengers). Monday and Thursday show similar patterns, 
+                      while midweek shows a slight dip in ridership.</p>
+                    </div>
+                  </div>
+                )}
+                
+                {passengerFlowForecast.type === 'monthly' && (
+                  <div className="bg-secondary/10 p-4 rounded-lg">
+                    <h4 className="text-sm font-medium mb-2">Seasonal Analysis</h4>
+                    <div className="text-sm text-muted-foreground">
+                      <p>The 6-month forecast shows strong seasonal variations with December peaking due to holiday travel 
+                      and shopping. Summer months (June-August) show the lowest ridership due to vacations and school breaks. 
+                      The annual trend shows a 3.2% increase year-over-year, adjusted for seasonal variations.</p>
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
+          </CardContent>
+        </Card>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <div className="lg:col-span-2 grid gap-6">
@@ -576,3 +1062,4 @@ const AdvancedForecasting = () => {
 };
 
 export default AdvancedForecasting;
+
