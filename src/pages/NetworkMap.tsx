@@ -89,7 +89,7 @@ const NetworkMap = () => {
                       </div>
                     )}
                   </TabsContent>
-                </TabsContent>
+                </CardContent>
               </Tabs>
             </Card>
           </div>
