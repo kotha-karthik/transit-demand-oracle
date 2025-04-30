@@ -2,7 +2,7 @@
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Accessibility, Wheelchair, Stairs, Elevator } from 'lucide-react';
+import { Accessibility, Users, Stairs as StairsIcon } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
 
 type AccessibilityFeature = 'wheelchair' | 'step-free' | 'escalator' | 'elevator' | 'accessible-toilet' | 'staff-assistance';
@@ -85,19 +85,19 @@ const AccessibilityPanel = () => {
                   <div className="flex flex-wrap gap-2 mb-2">
                     {station.features.includes('wheelchair') && (
                       <Badge variant="secondary" className="flex items-center gap-1">
-                        <Wheelchair className="h-3 w-3" />
+                        <Accessibility className="h-3 w-3" />
                         <span>Wheelchair</span>
                       </Badge>
                     )}
                     {station.features.includes('elevator') && (
                       <Badge variant="secondary" className="flex items-center gap-1">
-                        <Elevator className="h-3 w-3" />
+                        <Users className="h-3 w-3" />
                         <span>Elevator</span>
                       </Badge>
                     )}
                     {station.features.includes('escalator') && (
                       <Badge variant="secondary" className="flex items-center gap-1">
-                        <Stairs className="h-3 w-3" />
+                        <StairsIcon className="h-3 w-3" />
                         <span>Escalator</span>
                       </Badge>
                     )}
@@ -122,7 +122,7 @@ const AccessibilityPanel = () => {
             <div className="bg-secondary/20 p-3 rounded-md">
               <div className="text-sm">
                 <p className="flex items-center gap-2 mb-2">
-                  <Wheelchair className="h-4 w-4 text-blue-500" />
+                  <Accessibility className="h-4 w-4 text-blue-500" />
                   <span className="font-medium">Currently 86 out of 270 stations have step-free access</span>
                 </p>
                 <p className="text-xs text-muted-foreground">
