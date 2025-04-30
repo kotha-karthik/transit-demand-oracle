@@ -2,7 +2,7 @@
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Accessibility, Users, Stairs as StairsIcon } from 'lucide-react';
+import { Accessibility, Users, ArrowUp } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
 
 type AccessibilityFeature = 'wheelchair' | 'step-free' | 'escalator' | 'elevator' | 'accessible-toilet' | 'staff-assistance';
@@ -97,7 +97,7 @@ const AccessibilityPanel = () => {
                     )}
                     {station.features.includes('escalator') && (
                       <Badge variant="secondary" className="flex items-center gap-1">
-                        <StairsIcon className="h-3 w-3" />
+                        <ArrowUp className="h-3 w-3" />
                         <span>Escalator</span>
                       </Badge>
                     )}
