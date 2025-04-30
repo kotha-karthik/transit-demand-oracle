@@ -104,25 +104,26 @@ const Analytics = () => {
 
         <Card className="overflow-hidden">
           <CardHeader className="pb-0">
-            <Tabs value={selectedTab} onValueChange={setSelectedTab} className="w-full">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                <CardTitle className="text-lg">Passenger Flow Analysis</CardTitle>
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <CardTitle className="text-lg">Passenger Flow Analysis</CardTitle>
+              <Tabs value={selectedTab} onValueChange={setSelectedTab} className="w-full sm:w-auto">
                 <TabsList>
                   <TabsTrigger value="realtime">Real-time</TabsTrigger>
                   <TabsTrigger value="historical">Historical</TabsTrigger>
                 </TabsList>
-              </div>
-            </Tabs>
+              </Tabs>
+            </div>
           </CardHeader>
           <CardContent>
-            <TabsContent value="realtime" className="mt-4">
-              <RealTimeFlowPanel cityId={defaultCityId} />
-            </TabsContent>
-            <TabsContent value="historical" className="mt-4">
-              <div className="h-[400px]">
+            {selectedTab === 'realtime' ? (
+              <div className="mt-4">
+                <RealTimeFlowPanel cityId={defaultCityId} />
+              </div>
+            ) : (
+              <div className="mt-4 h-[400px]">
                 <FlowVisualization />
               </div>
-            </TabsContent>
+            )}
           </CardContent>
         </Card>
 
@@ -133,8 +134,11 @@ const Analytics = () => {
               <CardDescription>Real-time passenger arrivals and departures</CardDescription>
             </CardHeader>
             <CardContent>
-              <StationArrivals stationId={selectedStation} stationName={selectedStation ? 
-                cityMetroNetworks.london.stations.find(s => s.id === selectedStation)?.name || null : null} />
+              <StationArrivals 
+                stationId={selectedStation} 
+                stationName={selectedStation ? 
+                  cityMetroNetworks.london.stations.find(s => s.id.toString() === selectedStation)?.name || null : null} 
+              />
             </CardContent>
           </Card>
 
@@ -152,7 +156,7 @@ const Analytics = () => {
                         className="w-3 h-3 rounded-full" 
                         style={{ backgroundColor: ['#DC241F', '#0019A8', '#9B0056', '#007229', '#F3A9BB'][i] }}
                       ></div>
-                      <span className="font-medium">Line {line.id}</span>
+                      <span className="font-medium">{line.name}</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <span className="text-sm font-medium">{Math.floor(Math.random() * 2000 + 500)} pax/hr</span>

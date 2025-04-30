@@ -71,8 +71,8 @@ const AdvancedForecasting = () => {
                   
                   <TabsContent value="parameters">
                     <div className="grid gap-4">
-                      {/* Render prediction model with modelType */}
-                      <PredictionModel modelType={selectedModel} />
+                      {/* Render prediction model without modelType - the component doesn't accept this prop */}
+                      <PredictionModel />
                     </div>
                   </TabsContent>
                 </Tabs>
