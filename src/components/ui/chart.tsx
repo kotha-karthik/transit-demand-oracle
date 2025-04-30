@@ -1,3 +1,4 @@
+
 import * as React from "react"
 import * as RechartsPrimitive from "recharts"
 
@@ -36,7 +37,7 @@ const ChartContainer = React.forwardRef<
   HTMLDivElement,
   React.ComponentProps<"div"> & {
     config: ChartConfig
-    children: React.ReactNode // Changed to ReactNode to accept multiple children
+    children: React.ReactElement | React.ReactElement[]
   }
 >(({ id, className, children, config, ...props }, ref) => {
   const uniqueId = React.useId()

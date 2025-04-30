@@ -2,7 +2,7 @@
 import React from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { cn } from '@/lib/utils';
-import { Train, BarChart3, LineChart, Network, Settings } from 'lucide-react';
+import { Train, BarChart3, LineChart, Network, Settings, Bell, Globe, MapPin, Calendar, Thermometer, Accessibility } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 
 const Navigation = () => {
@@ -28,6 +28,40 @@ const Navigation = () => {
       path: '/advanced-forecasting', 
       name: 'Advanced Models', 
       icon: <Settings className="h-5 w-5" /> 
+    },
+    { 
+      path: '/alerts', 
+      name: 'Service Alerts', 
+      icon: <Bell className="h-5 w-5" />,
+      badge: '3'
+    },
+    { 
+      path: '/explore', 
+      name: 'Explore Data', 
+      icon: <Globe className="h-5 w-5" /> 
+    }
+  ];
+
+  const secondaryNavItems = [
+    { 
+      path: '/journey-planner', 
+      name: 'Journey Planner', 
+      icon: <MapPin className="h-5 w-5" /> 
+    },
+    { 
+      path: '/historical', 
+      name: 'Historical Data', 
+      icon: <Calendar className="h-5 w-5" /> 
+    },
+    { 
+      path: '/weather', 
+      name: 'Weather Impact', 
+      icon: <Thermometer className="h-5 w-5" /> 
+    },
+    { 
+      path: '/accessibility', 
+      name: 'Accessibility', 
+      icon: <Accessibility className="h-5 w-5" /> 
     }
   ];
 
@@ -54,8 +88,38 @@ const Navigation = () => {
               >
                 {item.icon}
                 <span className="hidden md:inline-flex">{item.name}</span>
+                {item.badge && (
+                  <Badge className="ml-auto hidden md:flex h-5 w-5 justify-center items-center p-0 text-xs">
+                    {item.badge}
+                  </Badge>
+                )}
               </NavLink>
             ))}
+          </div>
+
+          <div className="pt-4">
+            <div className="px-3 py-2">
+              <h3 className="text-xs font-medium text-muted-foreground hidden md:block">
+                Additional Features
+              </h3>
+              <div className="mt-2 space-y-1">
+                {secondaryNavItems.map((item) => (
+                  <NavLink
+                    key={item.path}
+                    to={item.path}
+                    className={({ isActive }) =>
+                      cn(
+                        "flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-foreground text-sm",
+                        isActive ? "bg-secondary text-foreground hover:text-foreground" : "hover:bg-secondary/50"
+                      )
+                    }
+                  >
+                    {item.icon}
+                    <span className="hidden md:inline-flex">{item.name}</span>
+                  </NavLink>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
 

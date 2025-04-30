@@ -8,6 +8,8 @@ import NetworkMap from "./pages/NetworkMap";
 import Analytics from "./pages/Analytics";
 import Forecasting from "./pages/Forecasting";
 import AdvancedForecasting from "./pages/AdvancedForecasting";
+import Alerts from "./pages/Alerts";
+import Explore from "./pages/Explore";
 import NotFound from "./pages/NotFound";
 import Settings from "./pages/Settings";
 
@@ -25,6 +27,12 @@ const App = () => (
           <Route path="/analytics" element={<Analytics />} />
           <Route path="/forecasting" element={<Forecasting />} />
           <Route path="/advanced-forecasting" element={<AdvancedForecasting />} />
+          <Route path="/alerts" element={<Alerts />} />
+          <Route path="/explore" element={<Explore />} />
+          <Route path="/journey-planner" element={<Alerts />} />
+          <Route path="/historical" element={<Explore />} />
+          <Route path="/weather" element={<Alerts />} />
+          <Route path="/accessibility" element={<Explore />} />
           <Route path="/settings" element={<Settings />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
