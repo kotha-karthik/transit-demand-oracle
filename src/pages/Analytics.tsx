@@ -10,6 +10,7 @@ import { BarChart3, Clock, Users, ArrowUpDown } from 'lucide-react';
 import FlowVisualization from '@/components/FlowVisualization';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { cityMetroNetworks } from '@/data/cityData';
+import { londonUndergroundLines } from '@/data/cityData';
 
 const Analytics = () => {
   const [selectedTab, setSelectedTab] = useState('realtime');
@@ -149,7 +150,7 @@ const Analytics = () => {
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                {cityMetroNetworks.london.lines.slice(0, 5).map((line, i) => (
+                {londonUndergroundLines.slice(0, 5).map((line, i) => (
                   <div key={i} className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
                       <div 
