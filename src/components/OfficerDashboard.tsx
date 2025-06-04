@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -34,6 +33,10 @@ interface IncidentReport {
 
 const OfficerDashboard = () => {
   const [currentTime, setCurrentTime] = useState(new Date());
+  
+  // Convert to London time
+  const londonTime = new Date(currentTime.toLocaleString("en-US", {timeZone: "Europe/London"}));
+  
   const [incidents, setIncidents] = useState<IncidentReport[]>([
     {
       id: '1',
@@ -124,8 +127,8 @@ const OfficerDashboard = () => {
                 ONLINE
               </Badge>
               <div className="text-right">
-                <div className="text-lg font-mono">{currentTime.toLocaleTimeString()}</div>
-                <div className="text-xs text-slate-400">{currentTime.toLocaleDateString()}</div>
+                <div className="text-lg font-mono">{londonTime.toLocaleTimeString('en-GB')}</div>
+                <div className="text-xs text-slate-400">London Time - {londonTime.toLocaleDateString('en-GB')}</div>
               </div>
             </div>
           </div>
