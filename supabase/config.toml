@@ -1,1 +1,10 @@
 project_id = "ldzljhcrsnnycdeyabgu"
+
+[functions.predict-passenger-flow]
+verify_jwt = false
+
+[functions.analyze-congestion]
+verify_jwt = false
+
+[functions.upload-csv-data]
+verify_jwt = false

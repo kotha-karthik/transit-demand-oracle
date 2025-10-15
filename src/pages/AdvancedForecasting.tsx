@@ -18,6 +18,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Calendar } from '@/components/ui/calendar';
 import DeepLearningArchitecture from '@/components/DeepLearningArchitecture';
 import PredictionModel from '@/components/PredictionModel';
+import MLPredictionPanel from '@/components/MLPredictionPanel';
+import CSVUploader from '@/components/CSVUploader';
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
 import { Bar, BarChart, XAxis, YAxis, ResponsiveContainer, Legend, LineChart, Line, AreaChart, Area } from 'recharts';
 import { Form, FormField, FormItem, FormLabel, FormControl } from '@/components/ui/form';
@@ -323,7 +325,7 @@ const AdvancedForecasting = () => {
         <div className="flex flex-col md:flex-row md:items-center md:justify-between space-y-2 md:space-y-0">
           <div>
             <h1 className="text-2xl font-bold">Advanced Forecasting</h1>
-            <p className="text-muted-foreground">Deep learning models for metro passenger flow prediction</p>
+            <p className="text-muted-foreground">AI-powered predictions with Lovable AI & custom dataset support</p>
           </div>
           <div className="flex gap-2">
             <Badge variant="outline" className="flex items-center gap-1">
@@ -336,6 +338,10 @@ const AdvancedForecasting = () => {
             </Badge>
           </div>
         </div>
+
+        {/* AI Prediction Components */}
+        <CSVUploader />
+        <MLPredictionPanel />
         
         {/* New Advanced Passenger Flow Forecasting Section */}
         <Card>

@@ -14,7 +14,138 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      predictions: {
+        Row: {
+          confidence_score: number | null
+          created_at: string
+          id: string
+          input_features: Json | null
+          model_version: string | null
+          predicted_value: number
+          prediction_time: string
+          prediction_type: string
+          station_name: string
+        }
+        Insert: {
+          confidence_score?: number | null
+          created_at?: string
+          id?: string
+          input_features?: Json | null
+          model_version?: string | null
+          predicted_value: number
+          prediction_time: string
+          prediction_type: string
+          station_name: string
+        }
+        Update: {
+          confidence_score?: number | null
+          created_at?: string
+          id?: string
+          input_features?: Json | null
+          model_version?: string | null
+          predicted_value?: number
+          prediction_time?: string
+          prediction_type?: string
+          station_name?: string
+        }
+        Relationships: []
+      }
+      underground_data: {
+        Row: {
+          accessibility_requests: number | null
+          anomaly_detected: number | null
+          avg_dwell_time: number | null
+          congestion_level: string
+          contactless_payments: number | null
+          created_at: string
+          day_of_week: string
+          delays_minutes: number | null
+          entry_count: number
+          exit_count: number
+          hour: number
+          id: string
+          incidents: number | null
+          is_rush_hour: number
+          line: string
+          maintenance_scheduled: number | null
+          oyster_payments: number | null
+          passenger_count: number
+          peak_multiplier: number | null
+          platform_crowding: number | null
+          predicted_next_hour: number | null
+          previous_hour_flow: number | null
+          service_status: string
+          station_name: string
+          temperature: number | null
+          ticket_sales: number | null
+          timestamp: string
+          train_frequency: number | null
+          weather_condition: string | null
+        }
+        Insert: {
+          accessibility_requests?: number | null
+          anomaly_detected?: number | null
+          avg_dwell_time?: number | null
+          congestion_level: string
+          contactless_payments?: number | null
+          created_at?: string
+          day_of_week: string
+          delays_minutes?: number | null
+          entry_count: number
+          exit_count: number
+          hour: number
+          id?: string
+          incidents?: number | null
+          is_rush_hour: number
+          line: string
+          maintenance_scheduled?: number | null
+          oyster_payments?: number | null
+          passenger_count: number
+          peak_multiplier?: number | null
+          platform_crowding?: number | null
+          predicted_next_hour?: number | null
+          previous_hour_flow?: number | null
+          service_status: string
+          station_name: string
+          temperature?: number | null
+          ticket_sales?: number | null
+          timestamp: string
+          train_frequency?: number | null
+          weather_condition?: string | null
+        }
+        Update: {
+          accessibility_requests?: number | null
+          anomaly_detected?: number | null
+          avg_dwell_time?: number | null
+          congestion_level?: string
+          contactless_payments?: number | null
+          created_at?: string
+          day_of_week?: string
+          delays_minutes?: number | null
+          entry_count?: number
+          exit_count?: number
+          hour?: number
+          id?: string
+          incidents?: number | null
+          is_rush_hour?: number
+          line?: string
+          maintenance_scheduled?: number | null
+          oyster_payments?: number | null
+          passenger_count?: number
+          peak_multiplier?: number | null
+          platform_crowding?: number | null
+          predicted_next_hour?: number | null
+          previous_hour_flow?: number | null
+          service_status?: string
+          station_name?: string
+          temperature?: number | null
+          ticket_sales?: number | null
+          timestamp?: string
+          train_frequency?: number | null
+          weather_condition?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
