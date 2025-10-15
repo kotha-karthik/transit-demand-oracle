@@ -1,0 +1,101 @@
+timestamp,station_name,line,passenger_count,entry_count,exit_count,temperature,weather_condition,day_of_week,hour,is_rush_hour,delays_minutes,service_status,congestion_level,platform_crowding,train_frequency,avg_dwell_time,incidents,maintenance_scheduled,accessibility_requests,ticket_sales,contactless_payments,oyster_payments,peak_multiplier,previous_hour_flow,predicted_next_hour,anomaly_detected
+2024-01-01 00:00:00,King's Cross St. Pancras,Northern,342,156,186,8.5,Clear,Monday,0,0,0,Good Service,Low,25,15,45,0,0,2,89,67,22,1.0,298,365,0
+2024-01-01 00:00:00,Victoria,Victoria,298,134,164,8.2,Clear,Monday,0,0,0,Good Service,Low,22,12,42,0,0,1,76,58,18,1.0,267,312,0
+2024-01-01 00:00:00,Oxford Circus,Central,267,119,148,8.8,Clear,Monday,0,0,0,Good Service,Low,20,10,40,0,0,1,68,51,17,1.0,241,289,0
+2024-01-01 00:00:00,Liverpool Street,Central,412,189,223,8.1,Clear,Monday,0,0,0,Good Service,Medium,35,18,48,0,0,3,98,74,24,1.0,378,445,0
+2024-01-01 00:00:00,Waterloo,Northern,523,241,282,7.9,Clear,Monday,0,0,0,Good Service,Medium,42,20,50,0,0,4,124,94,30,1.0,487,562,0
+2024-01-01 00:00:00,London Bridge,Northern,389,178,211,8.4,Clear,Monday,0,0,0,Good Service,Low,30,15,45,0,0,2,92,70,22,1.0,352,421,0
+2024-01-01 00:00:00,Piccadilly Circus,Piccadilly,456,209,247,8.6,Clear,Monday,0,0,0,Good Service,Medium,38,16,46,0,0,3,108,82,26,1.0,421,489,0
+2024-01-01 00:00:00,Leicester Square,Northern,334,153,181,8.3,Clear,Monday,0,0,0,Good Service,Low,27,13,43,0,0,2,79,60,19,1.0,305,359,0
+2024-01-01 00:00:00,Bank,Central,501,230,271,8.0,Clear,Monday,0,0,0,Good Service,Medium,40,19,49,0,0,4,119,90,29,1.0,465,538,0
+2024-01-01 00:00:00,Canary Wharf,Jubilee,612,281,331,7.8,Clear,Monday,0,0,0,Good Service,Medium,48,22,51,0,0,5,145,110,35,1.0,571,658,0
+2024-01-01 01:00:00,King's Cross St. Pancras,Northern,178,82,96,7.9,Clear,Monday,1,0,0,Good Service,Low,15,8,38,0,0,1,42,32,10,1.0,342,156,0
+2024-01-01 01:00:00,Victoria,Victoria,156,71,85,7.6,Clear,Monday,1,0,0,Good Service,Low,12,7,35,0,0,0,37,28,9,1.0,298,134,0
+2024-01-01 01:00:00,Oxford Circus,Central,145,67,78,8.1,Clear,Monday,1,0,0,Good Service,Low,10,6,33,0,0,0,34,26,8,1.0,267,119,0
+2024-01-01 01:00:00,Liverpool Street,Central,223,103,120,7.5,Clear,Monday,1,0,0,Good Service,Low,18,9,40,0,0,1,53,40,13,1.0,412,189,0
+2024-01-01 01:00:00,Waterloo,Northern,289,133,156,7.3,Clear,Monday,1,0,0,Good Service,Low,23,11,42,0,0,2,68,52,16,1.0,523,241,0
+2024-01-01 01:00:00,London Bridge,Northern,201,92,109,7.7,Clear,Monday,1,0,0,Good Service,Low,16,8,38,0,0,1,48,36,12,1.0,389,178,0
+2024-01-01 01:00:00,Piccadilly Circus,Piccadilly,234,108,126,8.0,Clear,Monday,1,0,0,Good Service,Low,20,9,39,0,0,1,56,42,14,1.0,456,209,0
+2024-01-01 01:00:00,Leicester Square,Northern,167,77,90,7.8,Clear,Monday,1,0,0,Good Service,Low,14,7,36,0,0,1,40,30,10,1.0,334,153,0
+2024-01-01 01:00:00,Bank,Central,267,123,144,7.4,Clear,Monday,1,0,0,Good Service,Low,21,10,41,0,0,2,63,48,15,1.0,501,230,0
+2024-01-01 01:00:00,Canary Wharf,Jubilee,312,143,169,7.2,Clear,Monday,1,0,0,Good Service,Low,25,12,43,0,0,2,74,56,18,1.0,612,281,0
+2024-01-01 02:00:00,King's Cross St. Pancras,Northern,92,42,50,7.2,Clear,Monday,2,0,0,Good Service,Low,8,5,30,0,0,0,22,17,5,1.0,178,82,0
+2024-01-01 02:00:00,Victoria,Victoria,81,37,44,6.9,Clear,Monday,2,0,0,Good Service,Low,6,4,28,0,0,0,19,14,5,1.0,156,71,0
+2024-01-01 02:00:00,Oxford Circus,Central,74,34,40,7.4,Clear,Monday,2,0,0,Good Service,Low,5,3,26,0,0,0,18,13,5,1.0,145,67,0
+2024-01-01 02:00:00,Liverpool Street,Central,115,53,62,6.8,Clear,Monday,2,0,0,Good Service,Low,9,6,32,0,0,0,27,21,6,1.0,223,103,0
+2024-01-01 02:00:00,Waterloo,Northern,148,68,80,6.6,Clear,Monday,2,0,0,Good Service,Low,12,7,34,0,0,1,35,27,8,1.0,289,133,0
+2024-01-01 02:00:00,London Bridge,Northern,104,48,56,7.0,Clear,Monday,2,0,0,Good Service,Low,8,5,30,0,0,0,25,19,6,1.0,201,92,0
+2024-01-01 02:00:00,Piccadilly Circus,Piccadilly,121,56,65,7.3,Clear,Monday,2,0,0,Good Service,Low,10,6,31,0,0,0,29,22,7,1.0,234,108,0
+2024-01-01 02:00:00,Leicester Square,Northern,86,40,46,7.1,Clear,Monday,2,0,0,Good Service,Low,7,4,29,0,0,0,20,15,5,1.0,167,77,0
+2024-01-01 02:00:00,Bank,Central,138,63,75,6.7,Clear,Monday,2,0,0,Good Service,Low,11,6,33,0,0,1,33,25,8,1.0,267,123,0
+2024-01-01 02:00:00,Canary Wharf,Jubilee,161,74,87,6.5,Clear,Monday,2,0,0,Good Service,Low,13,7,35,0,0,1,38,29,9,1.0,312,143,0
+2024-01-01 03:00:00,King's Cross St. Pancras,Northern,45,21,24,6.5,Clear,Monday,3,0,0,Good Service,Low,4,3,24,0,0,0,11,8,3,1.0,92,42,0
+2024-01-01 03:00:00,Victoria,Victoria,39,18,21,6.2,Clear,Monday,3,0,0,Good Service,Low,3,2,22,0,0,0,9,7,2,1.0,81,37,0
+2024-01-01 03:00:00,Oxford Circus,Central,36,17,19,6.7,Clear,Monday,3,0,0,Good Service,Low,3,2,20,0,0,0,9,7,2,1.0,74,34,0
+2024-01-01 03:00:00,Liverpool Street,Central,56,26,30,6.1,Clear,Monday,3,0,0,Good Service,Low,5,3,26,0,0,0,13,10,3,1.0,115,53,0
+2024-01-01 03:00:00,Waterloo,Northern,72,33,39,5.9,Clear,Monday,3,0,0,Good Service,Low,6,4,28,0,0,0,17,13,4,1.0,148,68,0
+2024-01-01 03:00:00,London Bridge,Northern,51,23,28,6.3,Clear,Monday,3,0,0,Good Service,Low,4,3,24,0,0,0,12,9,3,1.0,104,48,0
+2024-01-01 03:00:00,Piccadilly Circus,Piccadilly,59,27,32,6.6,Clear,Monday,3,0,0,Good Service,Low,5,3,25,0,0,0,14,11,3,1.0,121,56,0
+2024-01-01 03:00:00,Leicester Square,Northern,42,19,23,6.4,Clear,Monday,3,0,0,Good Service,Low,3,2,23,0,0,0,10,8,2,1.0,86,40,0
+2024-01-01 03:00:00,Bank,Central,67,31,36,6.0,Clear,Monday,3,0,0,Good Service,Low,5,3,27,0,0,0,16,12,4,1.0,138,63,0
+2024-01-01 03:00:00,Canary Wharf,Jubilee,78,36,42,5.8,Clear,Monday,3,0,0,Good Service,Low,6,4,29,0,0,0,19,14,5,1.0,161,74,0
+2024-01-01 04:00:00,King's Cross St. Pancras,Northern,23,11,12,6.1,Clear,Monday,4,0,0,Good Service,Low,2,2,18,0,0,0,5,4,1,1.0,45,21,0
+2024-01-01 04:00:00,Victoria,Victoria,20,9,11,5.8,Clear,Monday,4,0,0,Good Service,Low,2,1,16,0,0,0,5,4,1,1.0,39,18,0
+2024-01-01 04:00:00,Oxford Circus,Central,18,8,10,6.3,Clear,Monday,4,0,0,Good Service,Low,1,1,14,0,0,0,4,3,1,1.0,36,17,0
+2024-01-01 04:00:00,Liverpool Street,Central,28,13,15,5.7,Clear,Monday,4,0,0,Good Service,Low,2,2,20,0,0,0,7,5,2,1.0,56,26,0
+2024-01-01 04:00:00,Waterloo,Northern,37,17,20,5.5,Clear,Monday,4,0,0,Good Service,Low,3,2,22,0,0,0,9,7,2,1.0,72,33,0
+2024-01-01 04:00:00,London Bridge,Northern,26,12,14,5.9,Clear,Monday,4,0,0,Good Service,Low,2,2,18,0,0,0,6,5,1,1.0,51,23,0
+2024-01-01 04:00:00,Piccadilly Circus,Piccadilly,30,14,16,6.2,Clear,Monday,4,0,0,Good Service,Low,2,2,19,0,0,0,7,5,2,1.0,59,27,0
+2024-01-01 04:00:00,Leicester Square,Northern,21,10,11,6.0,Clear,Monday,4,0,0,Good Service,Low,2,1,17,0,0,0,5,4,1,1.0,42,19,0
+2024-01-01 04:00:00,Bank,Central,34,16,18,5.6,Clear,Monday,4,0,0,Good Service,Low,3,2,21,0,0,0,8,6,2,1.0,67,31,0
+2024-01-01 04:00:00,Canary Wharf,Jubilee,40,18,22,5.4,Clear,Monday,4,0,0,Good Service,Low,3,2,23,0,0,0,9,7,2,1.0,78,36,0
+2024-01-01 05:00:00,King's Cross St. Pancras,Northern,156,72,84,6.4,Clear,Monday,5,0,0,Good Service,Low,12,7,35,0,0,1,37,28,9,1.0,23,11,0
+2024-01-01 05:00:00,Victoria,Victoria,134,62,72,6.1,Clear,Monday,5,0,0,Good Service,Low,10,6,33,0,0,0,32,24,8,1.0,20,9,0
+2024-01-01 05:00:00,Oxford Circus,Central,123,57,66,6.6,Clear,Monday,5,0,0,Good Service,Low,9,5,31,0,0,0,29,22,7,1.0,18,8,0
+2024-01-01 05:00:00,Liverpool Street,Central,189,87,102,6.0,Clear,Monday,5,0,0,Good Service,Low,15,8,37,0,0,1,45,34,11,1.0,28,13,0
+2024-01-01 05:00:00,Waterloo,Northern,245,113,132,5.8,Clear,Monday,5,0,0,Good Service,Low,19,10,39,0,0,1,58,44,14,1.0,37,17,0
+2024-01-01 05:00:00,London Bridge,Northern,167,77,90,6.2,Clear,Monday,5,0,0,Good Service,Low,13,7,35,0,0,1,40,30,10,1.0,26,12,0
+2024-01-01 05:00:00,Piccadilly Circus,Piccadilly,198,91,107,6.5,Clear,Monday,5,0,0,Good Service,Low,16,8,36,0,0,1,47,36,11,1.0,30,14,0
+2024-01-01 05:00:00,Leicester Square,Northern,145,67,78,6.3,Clear,Monday,5,0,0,Good Service,Low,11,6,34,0,0,0,34,26,8,1.0,21,10,0
+2024-01-01 05:00:00,Bank,Central,223,103,120,5.9,Clear,Monday,5,0,0,Good Service,Low,18,9,38,0,0,1,53,40,13,1.0,34,16,0
+2024-01-01 05:00:00,Canary Wharf,Jubilee,267,123,144,5.7,Clear,Monday,5,0,0,Good Service,Low,21,10,40,0,0,2,63,48,15,1.0,40,18,0
+2024-01-01 06:00:00,King's Cross St. Pancras,Northern,892,411,481,7.1,Clear,Monday,6,0,0,Good Service,Medium,68,32,52,0,0,8,212,161,51,1.2,156,72,0
+2024-01-01 06:00:00,Victoria,Victoria,756,348,408,6.8,Clear,Monday,6,0,0,Good Service,Medium,58,28,50,0,0,6,180,137,43,1.2,134,62,0
+2024-01-01 06:00:00,Oxford Circus,Central,689,317,372,7.3,Clear,Monday,6,0,0,Good Service,Medium,53,25,48,0,0,5,164,124,40,1.2,123,57,0
+2024-01-01 06:00:00,Liverpool Street,Central,1045,481,564,6.7,Clear,Monday,6,0,0,Good Service,High,80,38,54,0,0,10,248,188,60,1.2,189,87,0
+2024-01-01 06:00:00,Waterloo,Northern,1356,625,731,6.5,Clear,Monday,6,0,0,Good Service,High,104,48,56,0,0,13,322,244,78,1.2,245,113,0
+2024-01-01 06:00:00,London Bridge,Northern,923,425,498,6.9,Clear,Monday,6,0,0,Good Service,Medium,71,34,51,0,0,9,219,166,53,1.2,167,77,0
+2024-01-01 06:00:00,Piccadilly Circus,Piccadilly,1078,497,581,7.2,Clear,Monday,6,0,0,Good Service,High,83,39,53,0,0,10,256,194,62,1.2,198,91,0
+2024-01-01 06:00:00,Leicester Square,Northern,789,363,426,7.0,Clear,Monday,6,0,0,Good Service,Medium,61,29,49,0,0,7,187,142,45,1.2,145,67,0
+2024-01-01 06:00:00,Bank,Central,1234,568,666,6.6,Clear,Monday,6,0,0,Good Service,High,95,44,55,0,0,12,293,222,71,1.2,223,103,0
+2024-01-01 06:00:00,Canary Wharf,Jubilee,1489,686,803,6.4,Clear,Monday,6,0,0,Good Service,High,114,53,57,0,0,14,354,268,86,1.2,267,123,0
+2024-01-01 07:00:00,King's Cross St. Pancras,Northern,2145,988,1157,8.2,Clear,Monday,7,1,2,Minor Delays,Very High,165,76,60,1,0,20,509,386,123,1.5,892,411,0
+2024-01-01 07:00:00,Victoria,Victoria,1823,840,983,7.9,Clear,Monday,7,1,1,Good Service,Very High,140,65,58,0,0,17,433,328,105,1.5,756,348,0
+2024-01-01 07:00:00,Oxford Circus,Central,1656,763,893,8.4,Clear,Monday,7,1,0,Good Service,Very High,127,59,56,0,0,15,393,298,95,1.5,689,317,0
+2024-01-01 07:00:00,Liverpool Street,Central,2512,1157,1355,7.8,Clear,Monday,7,1,3,Minor Delays,Very High,193,89,62,2,0,24,597,452,145,1.5,1045,481,0
+2024-01-01 07:00:00,Waterloo,Northern,3267,1505,1762,7.6,Clear,Monday,7,1,1,Good Service,Very High,251,116,64,0,0,31,776,588,188,1.5,1356,625,0
+2024-01-01 07:00:00,London Bridge,Northern,2223,1024,1199,8.0,Clear,Monday,7,1,2,Minor Delays,Very High,171,79,59,1,0,21,528,400,128,1.5,923,425,0
+2024-01-01 07:00:00,Piccadilly Circus,Piccadilly,2595,1195,1400,8.3,Clear,Monday,7,1,1,Good Service,Very High,199,92,61,0,0,25,616,467,149,1.5,1078,497,0
+2024-01-01 07:00:00,Leicester Square,Northern,1900,875,1025,8.1,Clear,Monday,7,1,0,Good Service,Very High,146,68,57,0,0,18,451,342,109,1.5,789,363,0
+2024-01-01 07:00:00,Bank,Central,2970,1368,1602,7.7,Clear,Monday,7,1,2,Minor Delays,Very High,228,106,63,1,0,28,706,535,171,1.5,1234,568,0
+2024-01-01 07:00:00,Canary Wharf,Jubilee,3584,1651,1933,7.5,Clear,Monday,7,1,1,Good Service,Very High,275,127,65,0,0,34,851,645,206,1.5,1489,686,0
+2024-01-01 08:00:00,King's Cross St. Pancras,Northern,3234,1490,1744,9.5,Clear,Monday,8,1,3,Minor Delays,Very High,248,115,65,2,0,30,768,582,186,1.8,2145,988,1
+2024-01-01 08:00:00,Victoria,Victoria,2748,1266,1482,9.2,Clear,Monday,8,1,2,Good Service,Very High,211,98,63,1,0,26,653,495,158,1.8,1823,840,0
+2024-01-01 08:00:00,Oxford Circus,Central,2497,1150,1347,9.7,Clear,Monday,8,1,1,Good Service,Very High,192,89,61,0,0,23,593,450,143,1.8,1656,763,0
+2024-01-01 08:00:00,Liverpool Street,Central,3789,1745,2044,9.1,Clear,Monday,8,1,4,Minor Delays,Very High,291,135,67,3,0,36,900,682,218,1.8,2512,1157,1
+2024-01-01 08:00:00,Waterloo,Northern,4928,2270,2658,8.9,Clear,Monday,8,1,2,Good Service,Very High,378,175,69,1,0,47,1171,888,283,1.8,3267,1505,0
+2024-01-01 08:00:00,London Bridge,Northern,3353,1545,1808,9.3,Clear,Monday,8,1,3,Minor Delays,Very High,258,119,64,2,0,32,797,604,193,1.8,2223,1024,1
+2024-01-01 08:00:00,Piccadilly Circus,Piccadilly,3914,1803,2111,9.6,Clear,Monday,8,1,2,Good Service,Very High,301,139,66,1,0,37,930,705,225,1.8,2595,1195,0
+2024-01-01 08:00:00,Leicester Square,Northern,2865,1320,1545,9.4,Clear,Monday,8,1,1,Good Service,Very High,220,102,62,0,0,27,681,516,165,1.8,1900,875,0
+2024-01-01 08:00:00,Bank,Central,4479,2063,2416,9.0,Clear,Monday,8,1,3,Minor Delays,Very High,344,159,68,2,0,42,1064,806,258,1.8,2970,1368,1
+2024-01-01 08:00:00,Canary Wharf,Jubilee,5404,2489,2915,8.8,Clear,Monday,8,1,2,Good Service,Very High,415,192,70,1,0,51,1284,973,311,1.8,3584,1651,0
+2024-01-01 09:00:00,King's Cross St. Pancras,Northern,2456,1131,1325,10.8,Partly Cloudy,Monday,9,1,1,Good Service,High,189,87,58,0,0,23,584,442,142,1.4,3234,1490,0
+2024-01-01 09:00:00,Victoria,Victoria,2087,962,1125,10.5,Partly Cloudy,Monday,9,1,0,Good Service,High,160,74,56,0,0,20,496,376,120,1.4,2748,1266,0
+2024-01-01 09:00:00,Oxford Circus,Central,1896,873,1023,11.0,Partly Cloudy,Monday,9,1,0,Good Service,High,146,68,54,0,0,18,451,342,109,1.4,2497,1150,0
+2024-01-01 09:00:00,Liverpool Street,Central,2878,1326,1552,10.4,Partly Cloudy,Monday,9,1,2,Minor Delays,High,221,102,60,1,0,27,684,518,166,1.4,3789,1745,0
+2024-01-01 09:00:00,Waterloo,Northern,3743,1724,2019,10.2,Partly Cloudy,Monday,9,1,1,Good Service,High,288,133,62,0,0,35,889,674,215,1.4,4928,2270,0
+2024-01-01 09:00:00,London Bridge,Northern,2545,1173,1372,10.6,Partly Cloudy,Monday,9,1,1,Good Service,High,196,91,57,0,0,24,605,458,147,1.4,3353,1545,0
+2024-01-01 09:00:00,Piccadilly Circus,Piccadilly,2973,1370,1603,10.9,Partly Cloudy,Monday,9,1,1,Good Service,High,228,106,59,0,0,28,707,536,171,1.4,3914,1803,0
+2024-01-01 09:00:00,Leicester Square,Northern,2176,1002,1174,10.7,Partly Cloudy,Monday,9,1,0,Good Service,High,167,77,55,0,0,21,517,392,125,1.4,2865,1320,0
+2024-01-01 09:00:00,Bank,Central,3401,1567,1834,10.3,Partly Cloudy,Monday,9,1,2,Minor Delays,High,261,121,61,1,0,32,809,613,196,1.4,4479,2063,0
+2024-01-01 09:00:00,Canary Wharf,Jubilee,4106,1892,2214,10.1,Partly Cloudy,Monday,9,1,1,Good Service,High,315,146,63,0,0,39,976,740,236,1.4,5404,2489,0
